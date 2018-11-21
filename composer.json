@@ -1,0 +1,22 @@
+{
+    "type": "library",
+    "name": "golem-core",
+    "description": "Core PHP library for Golem.ai",
+    "homepage": "https://golem.ai",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.1.3",
+        "symfony/serializer": "4.1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "GolemAi\\Core": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}
