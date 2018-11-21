@@ -1,6 +1,6 @@
 {
     "type": "library",
-    "name": "golem-core",
+    "name": "golem-ai/php-core",
     "description": "Core PHP library for Golem.ai",
     "homepage": "https://golem.ai",
     "license": "proprietary",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "GolemAi\\Core": ""
+            "GolemAi\\Core\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
