@@ -13,7 +13,7 @@ use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsProper
 use GolemAi\Core\Serializer\Denormalizer\ResponseDenormalizer;
 use PHPUnit\Framework\TestCase;
 
-class InteractionDenormalizerTest extends TestCase
+class ResponseDenormalizerTest extends TestCase
 {
     /**
      * @var ResponseDenormalizer

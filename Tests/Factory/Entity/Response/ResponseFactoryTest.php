@@ -69,6 +69,13 @@ class ResponseFactoryTest extends TestCase
         $this->assertEquals($timeTotal, $response->getTimeTotal());
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
     public function responseDataProvider()
     {
         return [

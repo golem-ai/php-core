@@ -10,10 +10,10 @@ class InteractionFactory implements EntityFactoryInterface
     public function create(array $args)
     {
         return new Interaction(
-            $args['id_interaction'],
-            $args['id_context'],
-            $args['parameters'],
-            $args['incomplete']
+            $args['id_interaction'] ?? 0,
+            $args['id_context'] ?? '',
+            $args['parameters'] ?? [],
+            $args['incomplete'] ?? false
         );
     }
 }

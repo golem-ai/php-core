@@ -53,6 +53,11 @@ class InteractionFactoryTest extends TestCase
         $this->assertEquals($incomplete, $interaction->isIncomplete());
     }
 
+    /**
+     * @codeCoverageIgnore
+     *
+     * @return array
+     */
     public function responseDataProvider()
     {
         return [

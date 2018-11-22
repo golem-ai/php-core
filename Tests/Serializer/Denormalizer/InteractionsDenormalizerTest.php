@@ -6,14 +6,12 @@ use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
-use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
 use GolemAi\Core\Serializer\Denormalizer\InteractionsDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallPropertyHandler;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsPropertyHandler;
-use GolemAi\Core\Serializer\Denormalizer\ResponseDenormalizer;
 use PHPUnit\Framework\TestCase;
 
-class ResponseDenormalizerTest extends TestCase
+class InteractionsDenormalizerTest extends TestCase
 {
     /**
      * @var InteractionsDenormalizer
