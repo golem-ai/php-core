@@ -4,6 +4,9 @@ namespace GolemAi\Core\Entity;
 
 class RequestData
 {
+    CONST PING_TYPE = 'ping';
+    CONST REQUEST_TYPE = 'request';
+
     /**
      * @var string
      */
@@ -48,7 +51,7 @@ class RequestData
         $token =  '',
         $text = '',
         $language = 'fr',
-        $type = 'request',
+        $type = self::REQUEST_TYPE,
         $labelling = false,
         $parametersDetail = true,
         $disableVerbose = true,

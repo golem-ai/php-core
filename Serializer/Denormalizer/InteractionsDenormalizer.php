@@ -5,7 +5,7 @@ namespace GolemAi\Core\Serializer\Denormalizer;
 use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
-use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\PropertyHandlerInterface;
+use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 class InteractionsDenormalizer implements DenormalizerInterface
 {
     /**
-     * @var PropertyHandlerInterface[]
+     * @var DenormalizerPropertyHandlerInterface[]
      */
     private $propertyHandlers;
 
@@ -49,7 +49,7 @@ class InteractionsDenormalizer implements DenormalizerInterface
         ;
     }
 
-    public function addHandler(PropertyHandlerInterface $handler)
+    public function addHandler(DenormalizerPropertyHandlerInterface $handler)
     {
         $this->propertyHandlers[] = $handler;
     }

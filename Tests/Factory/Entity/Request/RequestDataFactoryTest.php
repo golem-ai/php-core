@@ -26,7 +26,7 @@ class RequestDataFactoryTest extends TestCase
         $this->assertEquals('', $requestData->getToken());
         $this->assertEquals('', $requestData->getText());
         $this->assertEquals('fr', $requestData->getLanguage());
-        $this->assertEquals('request', $requestData->getType());
+        $this->assertEquals(RequestData::REQUEST_TYPE, $requestData->getType());
         $this->assertFalse($requestData->isLabelling());
         $this->assertTrue($requestData->hasParametersDetail());
         $this->assertTrue($requestData->isDisableVerbose());

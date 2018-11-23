@@ -4,7 +4,7 @@
 namespace GolemAi\Core\Serializer\Denormalizer\PropertyHandler;
 
 
-interface PropertyHandlerInterface
+interface DenormalizerPropertyHandlerInterface
 {
     /**
      * @param $data

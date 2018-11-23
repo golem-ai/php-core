@@ -16,7 +16,7 @@ class RequestDataFactory implements EntityFactoryInterface
             $args['token'] ?? '',
             $args['text'] ?? '',
             $args['language'] ?? 'fr',
-            $args['type'] ?? 'request',
+            $args['type'] ?? RequestData::REQUEST_TYPE,
             $args['labelling'] ?? false,
             $args['parametersDetail'] ?? true,
             $args['disableVerbose'] ?? true,

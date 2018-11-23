@@ -5,9 +5,9 @@ namespace GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction;
 
 
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
-use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\PropertyHandlerInterface;
+use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
 
-class CallPropertyHandler implements PropertyHandlerInterface
+class CallPropertyHandler implements DenormalizerPropertyHandlerInterface
 {
     private $factory;
 

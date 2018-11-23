@@ -31,6 +31,8 @@ class RequestNormalizerTest extends TestCase
         $this->assertEquals($data->getText(), $output['text']);
         $this->assertTrue(isset($output['language']));
         $this->assertEquals($data->getLanguage(), $output['language']);
+        $this->assertTrue(isset($output['type']));
+        $this->assertEquals($data->getType(), $output['type']);
         $this->assertTrue(isset($output['labelling']));
         $this->assertEquals($data->isLabelling(), $output['labelling']);
         $this->assertTrue(isset($output['parameters_detail']));
