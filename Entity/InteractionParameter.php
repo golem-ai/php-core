@@ -2,7 +2,7 @@
 
 namespace GolemAi\Core\Entity;
 
-class Archetype
+class InteractionParameter
 {
     private $message;
 }

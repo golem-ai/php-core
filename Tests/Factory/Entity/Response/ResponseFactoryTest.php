@@ -3,8 +3,10 @@
 namespace GolemAi\Core\Tests\Factory\Entity\Response;
 
 use GolemAi\Core\Entity\Response;
+use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 class ResponseFactoryTest extends TestCase
 {
@@ -20,53 +22,69 @@ class ResponseFactoryTest extends TestCase
 
     public function testCreateEmpty()
     {
-        $response = $this->factory->create([]);
+        $response = $this->factory->create([
+            'status_code' => 200
+        ]);
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(0, $response->getRequestId());
+        $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('', $response->getType());
-        $this->assertEquals('fr', $response->getRequestLanguage());
-        $this->assertEquals('', $response->getRequestText());
-        $this->assertEquals(0, $response->getTimeAi());
-        $this->assertEquals(0, $response->getTimeTotal());
+    }
+
+    public function testCreateEmptyWithMissingCode()
+    {
+        $this->setExpectedException(MissingOptionsException::class);
+        $this->factory->create([]);
     }
 
     /**
-     * @param int $requestId
+     * @param int $statusCode
      * @param string $type
-     * @param string $requestLanguage
-     * @param string $requestText
-     * @param int $timeAi
-     * @param int $timeTotal
-     * @param array $calls
      *
      * @dataProvider responseDataProvider
      */
     public function testCreateWithParams(
-        $requestId = 0,
+        $statusCode = 200,
         $type = '',
-        $requestLanguage = 'fr',
-        $requestText = '',
-        $timeAi = 0,
-        $timeTotal = 0,
-        $calls = []
+        $responseData = null
     )
     {
         $response = $this->factory->create([
-            'id_request' => $requestId,
+            'status_code' => $statusCode,
             'type' => $type,
-            'request_language' => $requestLanguage,
-            'request_text' => $requestText,
-            'time_ai' => $timeAi,
-            'time_total' => $timeTotal,
-            'calls' => $calls
+            'response_data' => $responseData,
         ]);
 
-        $this->assertEquals($requestId, $response->getRequestId());
+        $this->assertEquals($statusCode, $response->getStatusCode());
         $this->assertEquals($type, $response->getType());
-        $this->assertEquals($requestLanguage, $response->getRequestLanguage());
-        $this->assertEquals($requestText, $response->getRequestText());
-        $this->assertEquals($timeTotal, $response->getTimeTotal());
+        $this->assertEquals($responseData, $response->getData());
+    }
+
+    public function testGetRequiredFields()
+    {
+        $requiredFields = $this->factory->getRequiredFields();
+
+        $this->assertTrue(is_array($requiredFields));
+        $this->assertEquals('status_code', $requiredFields[0]);
+    }
+
+    public function testGetFieldsDefault()
+    {
+        $defaultValues = $this->factory->getFieldsDefault();
+
+        $this->assertTrue(is_array($defaultValues));
+        $this->assertArrayHasKey('type', $defaultValues);
+        $this->assertArrayHasKey('response_data', $defaultValues);
+    }
+
+    public function testGetFieldsType()
+    {
+        $fieldsType = $this->factory->getFieldsType();
+
+        $this->assertTrue(is_array($fieldsType));
+        $this->assertArrayHasKey('response_data', $fieldsType);
+        $this->assertTrue(in_array(ResponseData::class, $fieldsType['response_data']));
+        $this->assertTrue(in_array('null', $fieldsType['response_data']));
     }
 
     /**
@@ -80,12 +98,8 @@ class ResponseFactoryTest extends TestCase
     {
         return [
             [
-                1,
+                \rand(200, 400),
                 'answer_text',
-                'en',
-                'Hello I\'m a text request',
-                random_int(0, 500),
-                random_int(0, 500),
             ]
         ];
     }

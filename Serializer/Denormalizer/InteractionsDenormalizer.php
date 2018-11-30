@@ -44,11 +44,22 @@ class InteractionsDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return \is_array($data)
-            && Interaction::class === $type
-        ;
+        if (!\is_array($data) || Interaction::class !== $type) {
+            return false;
+        }
+
+        foreach ($this->propertyHandlers as $handler) {
+            if ($handler->canHandle($data)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
+    /**
+     * @param DenormalizerPropertyHandlerInterface $handler
+     */
     public function addHandler(DenormalizerPropertyHandlerInterface $handler)
     {
         $this->propertyHandlers[] = $handler;

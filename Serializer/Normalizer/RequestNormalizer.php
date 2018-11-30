@@ -18,7 +18,7 @@ class RequestNormalizer implements NormalizerInterface
             'language' => $data->getLanguage(),
             'type' => $data->getType(),
             'labelling' => $data->isLabelling(),
-            'parameters_detail' => $data->hasParametersDetail(),
+            'parameters_detail' => $data->isParametersDetail(),
             'disable_verbose' => $data->isDisableVerbose(),
             'multiple_interaction_search' => $data->isMultipleInteractionSearch(),
         ];

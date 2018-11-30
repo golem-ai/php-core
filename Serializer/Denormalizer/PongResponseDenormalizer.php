@@ -10,10 +10,8 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
-class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+class PongResponseDenormalizer implements DenormalizerInterface
 {
-    use DenormalizerAwareTrait;
-
     private $entityFactory;
 
     /**
@@ -30,18 +28,7 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $data['response_data'] = $this->denormalizer
-            ->denormalize(
-                $data,
-                ResponseData::class,
-                $format,
-                $context
-            )
-        ;
-
-        $response = $this->entityFactory->create($data);
-
-        return $response;
+        return $this->entityFactory->create($data);
     }
 
     /**
@@ -52,7 +39,7 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
         return \is_array($data)
             && Response::class === $type
             && isset($data['type'])
-            && $data['type'] === Response::ANSWER_TYPE
+            && $data['type'] === Response::PONG_TYPE
         ;
     }
 }

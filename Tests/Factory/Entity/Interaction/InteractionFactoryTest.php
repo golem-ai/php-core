@@ -37,6 +37,7 @@ class InteractionFactoryTest extends TestCase
         $interactionId,
         $contextId,
         $parameters,
+        $parametersDetail,
         $incomplete
     )
     {
@@ -44,13 +45,32 @@ class InteractionFactoryTest extends TestCase
             'id_interaction' => $interactionId,
             'id_context' => $contextId,
             'parameters' => $parameters,
+            'parameters_detail' => $parametersDetail,
             'incomplete' => $incomplete,
         ]);
 
         $this->assertEquals($interactionId, $interaction->getInteractionId());
         $this->assertEquals($contextId, $interaction->getContextId());
         $this->assertEquals($parameters, $interaction->getParameters());
+        $this->assertEquals($parametersDetail, $interaction->getParametersDetail());
         $this->assertEquals($incomplete, $interaction->isIncomplete());
+    }
+
+    public function testGetFieldsDefault()
+    {
+        $defaultValues = $this->factory->getFieldsDefault();
+
+        $this->assertArrayHasKey('id_interaction', $defaultValues);
+        $this->assertArrayHasKey('id_context', $defaultValues);
+        $this->assertArrayHasKey('parameters', $defaultValues);
+        $this->assertArrayHasKey('parameters_detail', $defaultValues);
+        $this->assertArrayHasKey('incomplete', $defaultValues);
+
+        $this->assertEquals(0, $defaultValues['id_interaction']);
+        $this->assertEquals('', $defaultValues['id_context']);
+        $this->assertEquals(array(), $defaultValues['parameters']);
+        $this->assertEquals(array(), $defaultValues['parameters_detail']);
+        $this->assertEquals(false, $defaultValues['incomplete']);
     }
 
     /**
@@ -64,7 +84,8 @@ class InteractionFactoryTest extends TestCase
             [
                 'BOUH',
                 'YAAA',
-                [],
+                ['test'],
+                ['hello'],
                 true,
             ]
         ];

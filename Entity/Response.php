@@ -4,86 +4,53 @@ namespace GolemAi\Core\Entity;
 
 class Response
 {
-    private $requestId;
-    private $type;
-    private $requestLanguage;
-    private $requestText;
-    private $timeAi;
-    private $timeTotal;
-    private $interactions;
+    const ERROR_TYPE = 'error';
+    const ANSWER_TYPE = 'answer_request';
+    const PONG_TYPE = 'pong';
 
+    private $statusCode;
+    private $type;
+    private $data;
+
+    /**
+     * Response constructor.
+     *
+     * @param int $statusCode
+     * @param string $type
+     * @param ResponseData|null $data
+     */
     public function __construct(
-        int $requestId = 0,
-        string $type = '',
-        string $requestLanguage = 'fr',
-        string $requestText = '',
-        float $timeAi = 0,
-        float $timeTotal = 0,
-        array $interactions = []
+        $statusCode,
+        $type = '',
+        ResponseData $data = null
     )
     {
-        $this->requestId = $requestId;
+        $this->statusCode = $statusCode;
         $this->type = $type;
-        $this->requestLanguage = $requestLanguage;
-        $this->requestText = $requestText;
-        $this->timeAi = $timeAi;
-        $this->timeTotal = $timeTotal;
-        $this->interactions = $interactions;
+        $this->data = $data;
     }
 
     /**
      * @return int
      */
-    public function getRequestId(): int
+    public function getStatusCode()
     {
-        return $this->requestId;
+        return $this->statusCode;
     }
 
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
 
     /**
-     * @return string
+     * @return ResponseData|null
      */
-    public function getRequestLanguage(): string
+    public function getData()
     {
-        return $this->requestLanguage;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestText(): string
-    {
-        return $this->requestText;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTimeAi(): float
-    {
-        return $this->timeAi;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTimeTotal(): float
-    {
-        return $this->timeTotal;
-    }
-
-    /**
-     * @return array
-     */
-    public function getInteractions(): array
-    {
-        return $this->interactions;
+        return $this->data;
     }
 }

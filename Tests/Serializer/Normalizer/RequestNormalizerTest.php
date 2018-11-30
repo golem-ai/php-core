@@ -36,7 +36,7 @@ class RequestNormalizerTest extends TestCase
         $this->assertTrue(isset($output['labelling']));
         $this->assertEquals($data->isLabelling(), $output['labelling']);
         $this->assertTrue(isset($output['parameters_detail']));
-        $this->assertEquals($data->hasParametersDetail(), $output['parameters_detail']);
+        $this->assertEquals($data->isParametersDetail(), $output['parameters_detail']);
         $this->assertTrue(isset($output['disable_verbose']));
         $this->assertEquals($data->isDisableVerbose(), $output['disable_verbose']);
         $this->assertTrue(isset($output['multiple_interaction_search']));

@@ -10,13 +10,14 @@ use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
 use GolemAi\Core\Factory\Entity\Response\ResponseDataFactory;
 use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
 use GolemAi\Core\Serializer\Denormalizer\InteractionsDenormalizer;
+use GolemAi\Core\Serializer\Denormalizer\PongResponseDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallPropertyHandler;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsPropertyHandler;
 use GolemAi\Core\Serializer\Denormalizer\ResponseDataDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\ResponseDenormalizer;
 use PHPUnit\Framework\TestCase;
 
-class ResponseDenormalizerTest extends TestCase
+class PongResponseDenormalizerTest extends TestCase
 {
     /**
      * @var ResponseDenormalizer
@@ -31,57 +32,34 @@ class ResponseDenormalizerTest extends TestCase
     public function setUp()
     {
         $this->factory = new ResponseFactory();
-        $this->denormalizer = new ResponseDenormalizer(
+        $this->denormalizer = new PongResponseDenormalizer(
             $this->factory
         );
-
-        $interactionFactory = new InteractionFactory();
-        $interactionDenormalizer = new InteractionsDenormalizer();
-        $interactionDenormalizer->addHandler(new CallPropertyHandler($interactionFactory));
-        $interactionDenormalizer->addHandler(new CallsPropertyHandler($interactionFactory));
-
-        $responseDataFactory = new ResponseDataFactory();
-        $responseDataDenormalizer = new ResponseDataDenormalizer($responseDataFactory);
-        $responseDataDenormalizer->setDenormalizer($interactionDenormalizer);
-
-        $this->denormalizer->setDenormalizer($responseDataDenormalizer);
     }
 
     public function testDenormalize()
     {
-        $output = $this->denormalizer->denormalize([
-            'status_code' => 200,
-            'type' => ''
-        ], Response::class, 'json');
-        $entity = $this->factory->create([
-            'status_code' => 200
-        ]);
+        $data = [
+            'status_code' => \rand(200, 400),
+            'type' => Response::PONG_TYPE
+        ];
 
-        $this->assertInstanceOf(get_class($entity), $output);
+        $response = $this->denormalizer->denormalize($data, Response::class);
 
-        $interactionId = \rand(0, 500);
-        $output = $this->denormalizer->denormalize([
-            'status_code' => 200,
-            'type' => 'answer_text',
-            'call' => [
-                'id_interaction' => $interactionId
-            ]
-        ], Response::class, 'json');
-
-        $this->assertEquals(200, $output->getStatusCode());
-        $this->assertEquals('answer_text', $output->getType());
-        $this->assertInstanceOf(ResponseData::class, $output->getData());
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals($data['status_code'], $response->getStatusCode());
+        $this->assertEquals($data['type'], $response->getType());
     }
 
     public function testSupportsDenormalization()
     {
         $data = [
-            'type' => Response::ANSWER_TYPE,
+            'type' => Response::PONG_TYPE,
         ];
         $this->assertTrue($this->denormalizer->supportsDenormalization($data, Response::class, 'json'));
 
         $data = [
-            'type' => Response::PONG_TYPE
+            'type' => Response::ANSWER_TYPE
         ];
         $this->assertFalse($this->denormalizer->supportsDenormalization($data, Response::class, 'json'));
 

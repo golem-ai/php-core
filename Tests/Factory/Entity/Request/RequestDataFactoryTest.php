@@ -28,7 +28,7 @@ class RequestDataFactoryTest extends TestCase
         $this->assertEquals('fr', $requestData->getLanguage());
         $this->assertEquals(RequestData::REQUEST_TYPE, $requestData->getType());
         $this->assertFalse($requestData->isLabelling());
-        $this->assertTrue($requestData->hasParametersDetail());
+        $this->assertTrue($requestData->isParametersDetail());
         $this->assertTrue($requestData->isDisableVerbose());
         $this->assertFalse($requestData->isMultipleInteractionSearch());
     }
@@ -72,7 +72,7 @@ class RequestDataFactoryTest extends TestCase
         $this->assertEquals($language, $request->getLanguage());
         $this->assertEquals($type, $request->getType());
         $this->assertEquals($isLabelling, $request->isLabelling());
-        $this->assertEquals($hasParametersDetail, $request->hasParametersDetail());
+        $this->assertEquals($hasParametersDetail, $request->isParametersDetail());
         $this->assertEquals($isDisableVerbose, $request->isDisableVerbose());
         $this->assertEquals($isMultipleInteractionSearch, $request->isMultipleInteractionSearch());
     }

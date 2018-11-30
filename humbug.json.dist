@@ -1,0 +1,15 @@
+{
+    "source": {
+        "directories": [
+            "\/var\/www\/html\/lib\/golem-ai\/php-core"
+        ],
+        "excludes": [
+            "Tests",
+            "vendor"
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "\/var\/www\/html\/lib\/golem-ai\/humbuglog.txt"
+    }
+}

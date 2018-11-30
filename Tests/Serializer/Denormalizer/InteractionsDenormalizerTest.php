@@ -33,7 +33,7 @@ class InteractionsDenormalizerTest extends TestCase
 
     public function testDenormalize()
     {
-        $interactionId = random_int(0, 500);
+        $interactionId = \rand(0, 500);
         $output = $this->denormalizer->denormalize([
             'call' => [
                 'id_interaction' => $interactionId
@@ -47,7 +47,15 @@ class InteractionsDenormalizerTest extends TestCase
 
     public function testSupportsNormalization()
     {
-        $data = [];
+        $data = [
+            'call' => []
+        ];
         $this->assertTrue($this->denormalizer->supportsDenormalization($data, Interaction::class, 'json'));
+
+        $data = [];
+        $this->assertFalse($this->denormalizer->supportsDenormalization($data, Interaction::class, 'json'));
+
+        $data = 'sdqsdqsdff';
+        $this->assertFalse($this->denormalizer->supportsDenormalization($data, Interaction::class, 'json'));
     }
 }

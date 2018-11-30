@@ -8,19 +8,21 @@ use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 class RequestDataFactory implements EntityFactoryInterface
 {
     /**
-     * {@inheritdoc}
+     * @param array $args
+     *
+     * @return RequestData
      */
     public function create(array $args)
     {
         return new RequestData(
-            $args['token'] ?? '',
-            $args['text'] ?? '',
-            $args['language'] ?? 'fr',
-            $args['type'] ?? RequestData::REQUEST_TYPE,
-            $args['labelling'] ?? false,
-            $args['parametersDetail'] ?? true,
-            $args['disableVerbose'] ?? true,
-            $args['multipleInteractionSearch'] ?? false
+            isset($args['token']) ? $args['token'] : '',
+            isset($args['text']) ? $args['text'] : '',
+            isset($args['language']) ? $args['language'] : 'fr',
+            isset($args['type']) ? $args['type'] : RequestData::REQUEST_TYPE,
+            isset($args['labelling']) ? $args['labelling'] : false,
+            isset($args['parametersDetail']) ? $args['parametersDetail'] : true,
+            isset($args['disableVerbose']) ? $args['disableVerbose'] : true,
+            isset($args['multipleInteractionSearch']) ? $args['multipleInteractionSearch'] : false
         );
     }
 }

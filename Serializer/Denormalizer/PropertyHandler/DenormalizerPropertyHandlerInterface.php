@@ -11,7 +11,7 @@ interface DenormalizerPropertyHandlerInterface
      *
      * @return bool
      */
-    public function canHandle(array $data): bool;
+    public function canHandle(array $data);
 
     /**
      * @param $data

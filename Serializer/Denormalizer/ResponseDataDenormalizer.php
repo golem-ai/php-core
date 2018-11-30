@@ -3,14 +3,13 @@
 namespace GolemAi\Core\Serializer\Denormalizer;
 
 use GolemAi\Core\Entity\Interaction;
-use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
-class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+class ResponseDataDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
 
@@ -30,18 +29,17 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $data['response_data'] = $this->denormalizer
-            ->denormalize(
-                $data,
-                ResponseData::class,
+        $data['interactions'] = $this->denormalizer
+            ->denormalize($data,
+                Interaction::class,
                 $format,
                 $context
             )
         ;
 
-        $response = $this->entityFactory->create($data);
+        $responseData = $this->entityFactory->create($data);
 
-        return $response;
+        return $responseData;
     }
 
     /**
@@ -50,9 +48,7 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
     public function supportsDenormalization($data, $type, $format = null)
     {
         return \is_array($data)
-            && Response::class === $type
-            && isset($data['type'])
-            && $data['type'] === Response::ANSWER_TYPE
+            && ResponseData::class === $type
         ;
     }
 }

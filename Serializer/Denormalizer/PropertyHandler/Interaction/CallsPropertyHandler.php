@@ -26,7 +26,7 @@ class CallsPropertyHandler implements DenormalizerPropertyHandlerInterface
      *
      * @return bool
      */
-    public function canHandle(array $data): bool
+    public function canHandle(array $data)
     {
         return isset($data['calls'])
             && \is_array($data['calls'])

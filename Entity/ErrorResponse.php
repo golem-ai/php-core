@@ -6,56 +6,45 @@ namespace GolemAi\Core\Entity;
 
 class ErrorResponse
 {
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var int
-     */
-    private $code;
-
-    /**
-     * @var string
-     */
-    private $message;
+    private $errorCode;
+    private $errorMessage;
+    private $errorDetail;
 
     /**
      * ErrorResponse constructor.
      *
-     * @param string $type
-     * @param int $code
-     * @param string $message
+     * @param int $errorCode
+     * @param string $errorMessage
+     * @param string $errorDetail
      */
-    public function __construct(string $type = '', $code = 0, $message = '')
+    public function __construct($errorCode = 0, $errorMessage = '', $errorDetail = '')
     {
-        $this->type = $type;
-        $this->code = $code;
-        $this->message = $message;
+        $this->errorCode = $errorCode;
+        $this->errorMessage = $errorMessage;
+        $this->errorDetail = $errorDetail;
     }
 
     /**
      * @return string
      */
-    public function getType(): string
+    public function getErrorDetail()
     {
-        return $this->type;
+        return $this->errorDetail;
     }
 
     /**
      * @return int
      */
-    public function getCode(): int
+    public function getErrorCode()
     {
-        return $this->code;
+        return $this->errorCode;
     }
 
     /**
      * @return string
      */
-    public function getMessage(): string
+    public function getErrorMessage()
     {
-        return $this->message;
+        return $this->errorMessage;
     }
 }

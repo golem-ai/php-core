@@ -71,144 +71,64 @@ class RequestData
     /**
      * @return string
      */
-    public function getToken(): string
+    public function getToken()
     {
         return $this->token;
     }
 
     /**
-     * @param string $token
-     * @return RequestData
-     */
-    public function setToken(string $token): RequestData
-    {
-        $this->token = $token;
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getText(): string
+    public function getText()
     {
         return $this->text;
     }
 
     /**
-     * @param string $text
-     * @return RequestData
-     */
-    public function setText(string $text): RequestData
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getLanguage(): string
+    public function getLanguage()
     {
         return $this->language;
     }
 
     /**
-     * @param string $language
-     * @return RequestData
-     */
-    public function setLanguage(string $language): RequestData
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    /**
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
-     * @return RequestData
-     */
-    public function setType(string $type): RequestData
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
-    public function isLabelling(): bool
+    public function isLabelling()
     {
         return $this->labelling;
     }
 
     /**
-     * @param bool $labelling
-     * @return RequestData
-     */
-    public function setLabelling(bool $labelling): RequestData
-    {
-        $this->labelling = $labelling;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
-    public function hasParametersDetail(): bool
+    public function isParametersDetail()
     {
         return $this->parametersDetail;
     }
 
     /**
-     * @param bool $parametersDetail
-     * @return RequestData
-     */
-    public function setParametersDetail(bool $parametersDetail): RequestData
-    {
-        $this->parametersDetail = $parametersDetail;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
-    public function isDisableVerbose(): bool
+    public function isDisableVerbose()
     {
         return $this->disableVerbose;
     }
 
     /**
-     * @param bool $disableVerbose
-     * @return RequestData
-     */
-    public function setDisableVerbose(bool $disableVerbose): RequestData
-    {
-        $this->disableVerbose = $disableVerbose;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
-    public function isMultipleInteractionSearch(): bool
+    public function isMultipleInteractionSearch()
     {
         return $this->multipleInteractionSearch;
-    }
-
-    /**
-     * @param bool $multipleInteractionSearch
-     * @return RequestData
-     */
-    public function setMultipleInteractionSearch(bool $multipleInteractionSearch): RequestData
-    {
-        $this->multipleInteractionSearch = $multipleInteractionSearch;
-        return $this;
     }
 }

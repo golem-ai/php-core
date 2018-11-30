@@ -21,16 +21,24 @@ class GolemTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->getMock()
         ;
+
         $request = $this->getMockBuilder(RequestInterface::class)
             ->getMock()
         ;
+
         $client = $this->getMockBuilder(HttpClient::class)
-            ->disableOriginalConstructor()
+            ->setMethods( [
+                'sendRequest'
+            ])
             ->getMock()
         ;
         $client->method('sendRequest')->willReturn($response);
+
         $factory = $this->getMockBuilder(RequestFactory::class)
             ->disableOriginalConstructor()
+            ->setMethods( [
+                'createRequest'
+            ])
             ->getMock()
         ;
         $factory->method('createRequest')->willReturn($request);
@@ -44,7 +52,6 @@ class GolemTest extends TestCase
         $serializer = new Serializer([new RequestNormalizer()], [new JsonEncoder()]);
 
         $golem = new Golem($client, $factory, $serializer, $dataFactory);
-
         $this->assertEquals($response, $golem->call('toto', []));
     }
 }
