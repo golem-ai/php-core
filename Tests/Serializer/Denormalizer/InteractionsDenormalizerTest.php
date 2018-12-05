@@ -43,6 +43,19 @@ class InteractionsDenormalizerTest extends TestCase
         $this->assertCount(1, $output);
         $this->assertInstanceOf(Interaction::class, $output[0]);
         $this->assertEquals($interactionId, $output[0]->getInteractionId());
+        $this->assertTrue(\is_array($output[0]->getParameters()));
+
+        $output = $this->denormalizer->denormalize([
+            'calls' => [
+                ['id_interaction' => 1],
+                ['id_interaction' => 2],
+            ]
+        ], Response::class, 'json');
+        $this->assertTrue(is_array($output));
+        $this->assertInstanceOf(Interaction::class, $output[0]);
+        $this->assertInstanceOf(Interaction::class, $output[1]);
+        $this->assertEquals(1, $output[0]->getInteractionId());
+        $this->assertEquals(2, $output[1]->getInteractionId());
     }
 
     public function testSupportsNormalization()

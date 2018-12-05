@@ -3,11 +3,8 @@
 namespace GolemAi\Core\Serializer\Denormalizer;
 
 use GolemAi\Core\Entity\Interaction;
-use GolemAi\Core\Entity\Response;
-use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
+use GolemAi\Core\Entity\Parameter;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class InteractionsDenormalizer implements DenormalizerInterface
@@ -30,13 +27,15 @@ class InteractionsDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
+        $interactions = [];
         foreach ($this->propertyHandlers as $handler) {
             if ($handler->canHandle($data)) {
-                return $handler->handle($data);
+                $interaction = $handler->handle($data);
+                $interactions = \array_merge($interaction, $interactions);
             }
         }
 
-        return [];
+        return $interactions;
     }
 
     /**

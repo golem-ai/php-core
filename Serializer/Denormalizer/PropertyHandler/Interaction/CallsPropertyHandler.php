@@ -4,11 +4,16 @@
 namespace GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction;
 
 
+use GolemAi\Core\Entity\Parameter;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 
 class CallsPropertyHandler implements DenormalizerPropertyHandlerInterface
 {
+    use DenormalizerAwareTrait;
+
+    const PROPERTY = 'calls';
     private $factory;
 
     /**
@@ -28,8 +33,8 @@ class CallsPropertyHandler implements DenormalizerPropertyHandlerInterface
      */
     public function canHandle(array $data)
     {
-        return isset($data['calls'])
-            && \is_array($data['calls'])
+        return isset($data[self::PROPERTY])
+            && \is_array($data[self::PROPERTY])
         ;
     }
 
@@ -40,10 +45,25 @@ class CallsPropertyHandler implements DenormalizerPropertyHandlerInterface
     {
         $interactions = [];
 
-        foreach ($data['calls'] as $call) {
-            $interactions[] = $this->factory->create($call);
+        foreach ($data[self::PROPERTY] as $call) {
+            $interaction = $this->factory->create($call);
+
+            if (isset($call['parameter'])) {
+                $parameters = $this->denormalizer->denormalize($data['parameter'], Parameter::class);
+                $interaction->setParameters($parameters);
+            }
+
+            $interactions[] = $interaction;
         }
 
         return $interactions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return self::PROPERTY;
     }
 }

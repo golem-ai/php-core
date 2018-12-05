@@ -19,4 +19,9 @@ interface DenormalizerPropertyHandlerInterface
      * @return mixed
      */
     public function handle(array $data);
+
+    /**
+     * @return string
+     */
+    public function getFieldName();
 }
