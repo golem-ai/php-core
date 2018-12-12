@@ -131,4 +131,68 @@ class RequestData
     {
         return $this->multipleInteractionSearch;
     }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param bool $labelling
+     */
+    public function setLabelling($labelling)
+    {
+        $this->labelling = $labelling;
+    }
+
+    /**
+     * @param bool $parametersDetail
+     */
+    public function setParametersDetail($parametersDetail)
+    {
+        $this->parametersDetail = $parametersDetail;
+    }
+
+    /**
+     * @param bool $disableVerbose
+     */
+    public function setDisableVerbose($disableVerbose)
+    {
+        $this->disableVerbose = $disableVerbose;
+    }
+
+    /**
+     * @param bool $multipleInteractionSearch
+     */
+    public function setMultipleInteractionSearch($multipleInteractionSearch)
+    {
+        $this->multipleInteractionSearch = $multipleInteractionSearch;
+    }
 }
