@@ -4,6 +4,7 @@ namespace GolemAi\Core\Tests\Serializer\Denormalizer\PropertyHandler\Interaction
 
 use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Parameter;
+use GolemAi\Core\Extractor\ArrayParameterExtractor;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
 use GolemAi\Core\Serializer\Denormalizer\ParameterDenormalizer;
@@ -19,7 +20,9 @@ class CallsPropertyHandlerTest extends TestCase
 
     public function setUp()
     {
+        $extractor = new ArrayParameterExtractor();
         $denormalizer = new ParameterDenormalizer();
+        $denormalizer->addExtractor($extractor);
         $this->factory = new InteractionFactory();
         $this->handler = new CallsPropertyHandler($this->factory);
         $this->handler->setDenormalizer($denormalizer);

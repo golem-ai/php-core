@@ -3,6 +3,9 @@
 namespace GolemAi\Core\Tests\Serializer\Denormalizer;
 
 use GolemAi\Core\Entity\Parameter;
+use GolemAi\Core\Extractor\ArrayParameterExtractor;
+use GolemAi\Core\Extractor\NullParameterExtractor;
+use GolemAi\Core\Extractor\ScalarParameterExtractor;
 use GolemAi\Core\Serializer\Denormalizer\ParameterDenormalizer;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +18,13 @@ class ParameterDenormalizerTest extends TestCase
 
     protected function setUp()
     {
+        $extractor = new ArrayParameterExtractor();
         $this->denormalizer = new ParameterDenormalizer();
+        $this->denormalizer->addExtractor($extractor);
+        $extractor = new NullParameterExtractor();
+        $this->denormalizer->addExtractor($extractor);
+        $extractor = new ScalarParameterExtractor();
+        $this->denormalizer->addExtractor($extractor);
     }
 
     public function testDeserialize()
@@ -34,7 +43,6 @@ class ParameterDenormalizerTest extends TestCase
             'departure_town' => ['Paris'],
             'departure_date' => $dateArray,
         ];
-
         $parameters = $this->denormalizer->denormalize($data, Parameter::class);
         $this->assertEquals('arrival_town', $parameters[0]->getName());
         $this->assertEquals('Rouen', $parameters[0]->getValue());
