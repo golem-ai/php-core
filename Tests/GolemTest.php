@@ -53,5 +53,6 @@ class GolemTest extends TestCase
 
         $golem = new Golem($client, $factory, $serializer, $dataFactory);
         $this->assertEquals($response, $golem->call('toto', []));
+        $this->assertEquals($response, $golem->call('toto', new RequestData()));
     }
 }

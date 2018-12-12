@@ -2,6 +2,7 @@
 
 namespace GolemAi\Core;
 
+use GolemAi\Core\Entity\RequestData;
 use GolemAi\Core\Factory\Entity\Request\RequestDataFactory;
 use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
@@ -32,16 +33,20 @@ class Golem
 
     /**
      * @param string $uri
-     * @param array $data
+     * @param array|RequestData $data
      *
      * @return \Psr\Http\Message\ResponseInterface
      *
      * @throws \Http\Client\Exception
      */
-    public function call($uri, array $data = array())
+    public function call($uri, $data)
     {
+        if (is_array($data)) {
+            $data = $this->dataFactory->create($data);
+        }
+
         $dataString = $this->serializer->serialize(
-            $this->dataFactory->create($data),
+            $data,
             'json'
         );
 

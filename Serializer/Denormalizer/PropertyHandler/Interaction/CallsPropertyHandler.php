@@ -46,14 +46,11 @@ class CallsPropertyHandler implements DenormalizerPropertyHandlerInterface
         $interactions = [];
 
         foreach ($data[self::PROPERTY] as $call) {
-            $interaction = $this->factory->create($call);
-
-            if (isset($call['parameter'])) {
-                $parameters = $this->denormalizer->denormalize($data['parameter'], Parameter::class);
-                $interaction->setParameters($parameters);
+            if (isset($call['parameters'])) {
+                $call['parameters'] = $this->denormalizer->denormalize($call['parameters'], Parameter::class);
             }
 
-            $interactions[] = $interaction;
+            $interactions[] = $this->factory->create($call);
         }
 
         return $interactions;

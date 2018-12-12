@@ -6,6 +6,7 @@ use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Parameter;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
+use GolemAi\Core\Serializer\Denormalizer\ParameterDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsPropertyHandler;
 use PHPUnit\Framework\TestCase;
 
@@ -18,8 +19,10 @@ class CallsPropertyHandlerTest extends TestCase
 
     public function setUp()
     {
+        $denormalizer = new ParameterDenormalizer();
         $this->factory = new InteractionFactory();
         $this->handler = new CallsPropertyHandler($this->factory);
+        $this->handler->setDenormalizer($denormalizer);
     }
 
     public function testCanHandle()
@@ -48,7 +51,9 @@ class CallsPropertyHandlerTest extends TestCase
         $this->assertTrue(\is_array($interactions));
         $this->assertInstanceOf(Interaction::class, $interactions[0]);
         $this->assertTrue(\is_array($interactions[0]->getParameters()));
-        $this->assertInstanceOf(Parameter::class, $interactions[0]->getParameters()[0]);
+        foreach ($interactions[0]->getParameters() as $parameter) {
+            $this->assertInstanceOf(Parameter::class, $parameter);
+        }
     }
 
     public function testGetFieldName()
