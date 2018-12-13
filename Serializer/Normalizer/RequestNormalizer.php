@@ -13,14 +13,15 @@ class RequestNormalizer implements NormalizerInterface
     public function normalize($data, $format = null, array $context = array())
     {
         return [
-            'token' => $data->getToken(),
-            'text' => $data->getText(),
-            'language' => $data->getLanguage(),
-            'type' => $data->getType(),
-            'labelling' => $data->isLabelling(),
-            'parameters_detail' => $data->isParametersDetail(),
+            'conversation_mode' => $data->isConversationMode(),
             'disable_verbose' => $data->isDisableVerbose(),
+            'labelling' => $data->isLabelling(),
+            'language' => $data->getLanguage(),
             'multiple_interaction_search' => $data->isMultipleInteractionSearch(),
+            'parameters_detail' => $data->isParametersDetail(),
+            'text' => $data->getText(),
+            'token' => $data->getToken(),
+            'type' => $data->getType(),
         ];
     }
 

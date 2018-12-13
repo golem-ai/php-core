@@ -33,19 +33,10 @@ class ResponseFactory implements EntityFactoryInterface
     /**
      * @return array
      */
-    public function getRequiredFields()
-    {
-        return array(
-            'status_code',
-        );
-    }
-
-    /**
-     * @return array
-     */
     public function getFieldsDefault()
     {
         return array(
+            'status_code' => 200,
             'type' => '',
             'response_data' => null,
         );

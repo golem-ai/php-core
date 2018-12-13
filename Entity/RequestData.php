@@ -47,6 +47,11 @@ class RequestData
      */
     private $multipleInteractionSearch;
 
+    /**
+     * @var bool
+     */
+    private $conversationMode;
+
     public function __construct(
         $token =  '',
         $text = '',
@@ -55,7 +60,8 @@ class RequestData
         $labelling = false,
         $parametersDetail = true,
         $disableVerbose = true,
-        $multipleInteractionSearch = false
+        $multipleInteractionSearch = false,
+        $conversationMode = false
     )
     {
         $this->token = $token;
@@ -66,6 +72,7 @@ class RequestData
         $this->disableVerbose = $disableVerbose;
         $this->multipleInteractionSearch = $multipleInteractionSearch;
         $this->text = $text;
+        $this->conversationMode = $conversationMode;
     }
 
     /**
@@ -133,6 +140,14 @@ class RequestData
     }
 
     /**
+     * @return bool
+     */
+    public function isConversationMode()
+    {
+        return $this->conversationMode;
+    }
+
+    /**
      * @param string $token
      */
     public function setToken($token)
@@ -194,5 +209,13 @@ class RequestData
     public function setMultipleInteractionSearch($multipleInteractionSearch)
     {
         $this->multipleInteractionSearch = $multipleInteractionSearch;
+    }
+
+    /**
+     * @param bool $conversationMode
+     */
+    public function setConversationMode($conversationMode)
+    {
+        $this->conversationMode = $conversationMode;
     }
 }

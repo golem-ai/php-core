@@ -41,6 +41,8 @@ class RequestNormalizerTest extends TestCase
         $this->assertEquals($data->isDisableVerbose(), $output['disable_verbose']);
         $this->assertTrue(isset($output['multiple_interaction_search']));
         $this->assertEquals($data->isMultipleInteractionSearch(), $output['multiple_interaction_search']);
+        $this->assertTrue(isset($output['conversation_mode']));
+        $this->assertEquals($data->isMultipleInteractionSearch(), $output['conversation_mode']);
     }
 
     public function testSupportsNormalization()

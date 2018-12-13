@@ -22,7 +22,8 @@ class RequestDataFactory implements EntityFactoryInterface
             isset($args['labelling']) ? $args['labelling'] : false,
             isset($args['parametersDetail']) ? $args['parametersDetail'] : true,
             isset($args['disableVerbose']) ? $args['disableVerbose'] : true,
-            isset($args['multipleInteractionSearch']) ? $args['multipleInteractionSearch'] : false
+            isset($args['multipleInteractionSearch']) ? $args['multipleInteractionSearch'] : false,
+            isset($args['conversationMode']) ? $args['conversationMode'] : false
         );
     }
 }

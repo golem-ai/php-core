@@ -6,7 +6,6 @@ use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 class ResponseFactoryTest extends TestCase
 {
@@ -29,12 +28,6 @@ class ResponseFactoryTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('', $response->getType());
-    }
-
-    public function testCreateEmptyWithMissingCode()
-    {
-        $this->setExpectedException(MissingOptionsException::class);
-        $this->factory->create([]);
     }
 
     /**
@@ -60,19 +53,12 @@ class ResponseFactoryTest extends TestCase
         $this->assertEquals($responseData, $response->getData());
     }
 
-    public function testGetRequiredFields()
-    {
-        $requiredFields = $this->factory->getRequiredFields();
-
-        $this->assertTrue(is_array($requiredFields));
-        $this->assertEquals('status_code', $requiredFields[0]);
-    }
-
     public function testGetFieldsDefault()
     {
         $defaultValues = $this->factory->getFieldsDefault();
 
         $this->assertTrue(is_array($defaultValues));
+        $this->assertArrayHasKey('status_code', $defaultValues);
         $this->assertArrayHasKey('type', $defaultValues);
         $this->assertArrayHasKey('response_data', $defaultValues);
     }

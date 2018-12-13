@@ -31,6 +31,7 @@ class RequestDataFactoryTest extends TestCase
         $this->assertTrue($requestData->isParametersDetail());
         $this->assertTrue($requestData->isDisableVerbose());
         $this->assertFalse($requestData->isMultipleInteractionSearch());
+        $this->assertFalse($requestData->isConversationMode());
     }
 
     /**
@@ -53,7 +54,8 @@ class RequestDataFactoryTest extends TestCase
         $isLabelling = false,
         $hasParametersDetail = true,
         $isDisableVerbose = true,
-        $isMultipleInteractionSearch = false
+        $isMultipleInteractionSearch = false,
+        $isConversationMode = false
     )
     {
         $request = $this->factory->create([
@@ -65,6 +67,7 @@ class RequestDataFactoryTest extends TestCase
             'parametersDetail' => $hasParametersDetail,
             'disableVerbose' => $isDisableVerbose,
             'multipleInteractionSearch' => $isMultipleInteractionSearch,
+            'conversationMode' => $isConversationMode,
         ]);
 
         $this->assertEquals($token, $request->getToken());
@@ -75,6 +78,7 @@ class RequestDataFactoryTest extends TestCase
         $this->assertEquals($hasParametersDetail, $request->isParametersDetail());
         $this->assertEquals($isDisableVerbose, $request->isDisableVerbose());
         $this->assertEquals($isMultipleInteractionSearch, $request->isMultipleInteractionSearch());
+        $this->assertEquals($isConversationMode, $request->isConversationMode());
     }
 
     /**
@@ -94,6 +98,7 @@ class RequestDataFactoryTest extends TestCase
                 true,
                 false,
                 false,
+                true,
                 true,
             ]
         ];
