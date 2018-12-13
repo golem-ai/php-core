@@ -30,6 +30,8 @@ class RequestNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null, array $context = array())
     {
-        return $data instanceof RequestData;
+        return
+            $data instanceof RequestData
+        ;
     }
 }

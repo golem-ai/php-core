@@ -39,6 +39,7 @@ trait OptionsResolverAwareTrait
             'call',
             'calls',
             'id_request',
+            'labels',
             'request_language',
             'request_text',
             'time_ai',
