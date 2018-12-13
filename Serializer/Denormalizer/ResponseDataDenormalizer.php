@@ -5,6 +5,7 @@ namespace GolemAi\Core\Serializer\Denormalizer;
 use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
+use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -29,13 +30,17 @@ class ResponseDataDenormalizer implements DenormalizerInterface, DenormalizerAwa
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $data['interactions'] = $this->denormalizer
-            ->denormalize($data,
-                Interaction::class,
-                $format,
-                $context
-            )
-        ;
+        try {
+            $data['interactions'] = $this->denormalizer
+                ->denormalize($data,
+                    Interaction::class,
+                    $format,
+                    $context
+                )
+            ;
+        } catch (NotNormalizableValueException $exception) {
+            $data['interactions'] = [];
+        }
 
         $responseData = $this->entityFactory->create($data);
 
