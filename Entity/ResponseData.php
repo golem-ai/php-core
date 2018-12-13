@@ -12,6 +12,8 @@ class ResponseData
     private $timeAi;
     private $timeTotal;
     private $interactions;
+    private $verboseAvailableInteractions;
+    private $helperMessage;
 
     /**
      * ResponseData constructor.
@@ -28,7 +30,9 @@ class ResponseData
         $requestText = '',
         $timeAi = 0.0,
         $timeTotal = 0.0,
-        array $interactions = []
+        array $interactions = [],
+        $verboseAvailableInteractions = '[]',
+        $helperMessage = ''
     )
     {
         $this->requestId = $requestId;
@@ -37,6 +41,8 @@ class ResponseData
         $this->timeAi = $timeAi;
         $this->timeTotal = $timeTotal;
         $this->interactions = $interactions;
+        $this->verboseAvailableInteractions = $verboseAvailableInteractions;
+        $this->helperMessage = $helperMessage;
     }
 
     /**
@@ -85,5 +91,21 @@ class ResponseData
     public function getInteractions()
     {
         return $this->interactions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerboseAvailableInteractions()
+    {
+        return $this->verboseAvailableInteractions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelperMessage()
+    {
+        return $this->helperMessage;
     }
 }

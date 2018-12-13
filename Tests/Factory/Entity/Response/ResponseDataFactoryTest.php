@@ -73,6 +73,8 @@ class ResponseDataFactoryTest extends TestCase
         $this->assertArrayHasKey('time_ai', $defaultValues);
         $this->assertArrayHasKey('time_total', $defaultValues);
         $this->assertArrayHasKey('interactions', $defaultValues);
+        $this->assertArrayHasKey('verbose_available_interactions', $defaultValues);
+        $this->assertArrayHasKey('helper_message', $defaultValues);
 
         $this->assertEquals(0, $defaultValues['id_request']);
         $this->assertEquals('fr', $defaultValues['request_language']);
@@ -80,6 +82,8 @@ class ResponseDataFactoryTest extends TestCase
         $this->assertEquals(0.0, $defaultValues['time_ai']);
         $this->assertEquals(0.0, $defaultValues['time_total']);
         $this->assertEquals(array(), $defaultValues['interactions']);
+        $this->assertEquals(array(), $defaultValues['verbose_available_interactions']);
+        $this->assertEquals('', $defaultValues['helper_message']);
     }
 
     /**

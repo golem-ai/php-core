@@ -38,6 +38,7 @@ trait OptionsResolverAwareTrait
             'status_code',
             'call',
             'calls',
+            'helper_message',
             'id_request',
             'labels',
             'request_language',
@@ -46,6 +47,7 @@ trait OptionsResolverAwareTrait
             'time_total',
             'interactions',
             'type',
+            'verbose_available_interactions',
         );
     }
 
