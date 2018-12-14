@@ -5,6 +5,7 @@ namespace GolemAi\Core\Tests\Factory\Entity\Response;
 use GolemAi\Core\Entity\RequestData;
 use GolemAi\Core\Factory\Entity\Request\RequestDataFactory;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 class RequestDataFactoryTest extends TestCase
 {
@@ -20,11 +21,16 @@ class RequestDataFactoryTest extends TestCase
 
     public function testCreateEmpty()
     {
+        $this->setExpectedException(MissingOptionsException::class);
         $requestData = $this->factory->create([]);
 
+        $requestData = $this->factory->create([
+            'token' => 'toto',
+            'text' => 'myText',
+        ]);
         $this->assertInstanceOf(RequestData::class, $requestData);
-        $this->assertEquals('', $requestData->getToken());
-        $this->assertEquals('', $requestData->getText());
+        $this->assertEquals('toto', $requestData->getToken());
+        $this->assertEquals('myText', $requestData->getText());
         $this->assertEquals('fr', $requestData->getLanguage());
         $this->assertEquals(RequestData::REQUEST_TYPE, $requestData->getType());
         $this->assertFalse($requestData->isLabelling());
@@ -64,10 +70,10 @@ class RequestDataFactoryTest extends TestCase
             'language' => $language,
             'type' => $type,
             'labelling' => $isLabelling,
-            'parametersDetail' => $hasParametersDetail,
-            'disableVerbose' => $isDisableVerbose,
-            'multipleInteractionSearch' => $isMultipleInteractionSearch,
-            'conversationMode' => $isConversationMode,
+            'parameters_detail' => $hasParametersDetail,
+            'disable_verbose' => $isDisableVerbose,
+            'multiple_interaction_search' => $isMultipleInteractionSearch,
+            'conversation_mode' => $isConversationMode,
         ]);
 
         $this->assertEquals($token, $request->getToken());
@@ -79,6 +85,42 @@ class RequestDataFactoryTest extends TestCase
         $this->assertEquals($isDisableVerbose, $request->isDisableVerbose());
         $this->assertEquals($isMultipleInteractionSearch, $request->isMultipleInteractionSearch());
         $this->assertEquals($isConversationMode, $request->isConversationMode());
+    }
+
+    public function testGetFieldsDefault()
+    {
+        $defaultValues = $this->factory->getFieldsDefault();
+
+        $this->assertTrue(is_array($defaultValues));
+        $this->assertArrayHasKey('language', $defaultValues);
+        $this->assertArrayHasKey('type', $defaultValues);
+        $this->assertArrayHasKey('labelling', $defaultValues);
+        $this->assertArrayHasKey('parameters_detail', $defaultValues);
+        $this->assertArrayHasKey('disable_verbose', $defaultValues);
+        $this->assertArrayHasKey('multiple_interaction_search', $defaultValues);
+        $this->assertArrayHasKey('conversation_mode', $defaultValues);
+    }
+
+    public function testGetDefinedFields()
+    {
+        $definedFields = $this->factory->getDefinedFields();
+
+        $this->assertTrue(is_array($definedFields));
+        $this->assertTrue(in_array('language', $definedFields));
+        $this->assertTrue(in_array('type', $definedFields));
+        $this->assertTrue(in_array('labelling', $definedFields));
+        $this->assertTrue(in_array('parameters_detail', $definedFields));
+        $this->assertTrue(in_array('disable_verbose', $definedFields));
+        $this->assertTrue(in_array('multiple_interaction_search', $definedFields));
+        $this->assertTrue(in_array('conversation_mode', $definedFields));
+    }
+
+    public function testGetRequiredFields()
+    {
+        $requiredFields = $this->factory->getRequiredFields();
+
+        $this->assertTrue(in_array('token', $requiredFields));
+        $this->assertTrue(in_array('text', $requiredFields));
     }
 
     /**

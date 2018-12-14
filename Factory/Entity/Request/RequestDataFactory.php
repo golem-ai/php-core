@@ -4,9 +4,12 @@ namespace GolemAi\Core\Factory\Entity\Request;
 
 use GolemAi\Core\Entity\RequestData;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
+use GolemAi\Core\Factory\OptionsResolverAwareTrait;
 
 class RequestDataFactory implements EntityFactoryInterface
 {
+    use OptionsResolverAwareTrait;
+
     /**
      * @param array $args
      *
@@ -14,16 +17,53 @@ class RequestDataFactory implements EntityFactoryInterface
      */
     public function create(array $args)
     {
+        $this->configureOptions();
+        $args = $this->optionsResolver->resolve($args);
+
         return new RequestData(
-            isset($args['token']) ? $args['token'] : '',
-            isset($args['text']) ? $args['text'] : '',
-            isset($args['language']) ? $args['language'] : 'fr',
-            isset($args['type']) ? $args['type'] : RequestData::REQUEST_TYPE,
-            isset($args['labelling']) ? $args['labelling'] : false,
-            isset($args['parametersDetail']) ? $args['parametersDetail'] : true,
-            isset($args['disableVerbose']) ? $args['disableVerbose'] : true,
-            isset($args['multipleInteractionSearch']) ? $args['multipleInteractionSearch'] : false,
-            isset($args['conversationMode']) ? $args['conversationMode'] : false
+            $args['token'],
+            $args['text'],
+            $args['language'],
+            $args['type'],
+            $args['labelling'],
+            $args['parameters_detail'],
+            $args['disable_verbose'],
+            $args['multiple_interaction_search'],
+            $args['conversation_mode']
+        );
+    }
+
+    public function getRequiredFields()
+    {
+        return array(
+            'token',
+            'text',
+        );
+    }
+
+    public function getDefinedFields()
+    {
+        return array(
+            'language',
+            'type',
+            'labelling',
+            'parameters_detail',
+            'disable_verbose',
+            'multiple_interaction_search',
+            'conversation_mode',
+        );
+    }
+
+    public function getFieldsDefault()
+    {
+        return array(
+            'language' => 'fr',
+            'type' => RequestData::REQUEST_TYPE,
+            'labelling' => false,
+            'parameters_detail' => true,
+            'disable_verbose' => true,
+            'multiple_interaction_search' => false,
+            'conversation_mode' => false,
         );
     }
 }
