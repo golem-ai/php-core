@@ -25,7 +25,11 @@ class InteractionFactory implements EntityFactoryInterface
             $args['id_context'],
             $args['parameters'],
             $args['parameters_detail'],
-            $args['incomplete']
+            $args['incomplete'],
+            $args['id_missing_parameters'],
+            $args['verbose_interaction'],
+            $args['verbose_missing_parameters'],
+            $args['helper_message']
         );
     }
 
@@ -42,6 +46,10 @@ class InteractionFactory implements EntityFactoryInterface
             'parameters' => array(),
             'parameters_detail' => array(),
             'incomplete' => false,
+            'id_missing_parameters' => array(),
+            'verbose_interaction' => '',
+            'verbose_missing_parameters' => array(),
+            'helper_message' => '',
         );
     }
 }

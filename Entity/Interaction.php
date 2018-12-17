@@ -9,13 +9,21 @@ class Interaction
     private $parameters;
     private $parametersDetail;
     private $incomplete;
+    private $idMissingParameter;
+    private $verboseInteraction;
+    private $verboseMissingParameters;
+    private $helperMessage;
 
     public function __construct(
         $interactionId = '',
         $contextId = '',
         $parameters = [],
         $parametersDetail = [],
-        $incomplete = false
+        $incomplete = false,
+        $idMissingParameter = [],
+        $verboseInteraction = '',
+        $verboseMissingParameters = [],
+        $helperMessage = ''
     )
     {
         $this->interactionId = $interactionId;
@@ -23,6 +31,10 @@ class Interaction
         $this->parameters = $parameters;
         $this->parametersDetail = $parametersDetail;
         $this->incomplete = $incomplete;
+        $this->idMissingParameter = $idMissingParameter;
+        $this->verboseInteraction = $verboseInteraction;
+        $this->verboseMissingParameters = $verboseMissingParameters;
+        $this->helperMessage = $helperMessage;
     }
 
     /**
@@ -63,5 +75,37 @@ class Interaction
     public function isIncomplete()
     {
         return $this->incomplete;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIdMissingParameter()
+    {
+        return $this->idMissingParameter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerboseInteraction()
+    {
+        return $this->verboseInteraction;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVerboseMissingParameters()
+    {
+        return $this->verboseMissingParameters;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelperMessage()
+    {
+        return $this->helperMessage;
     }
 }

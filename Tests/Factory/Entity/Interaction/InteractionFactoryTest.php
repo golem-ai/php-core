@@ -38,7 +38,11 @@ class InteractionFactoryTest extends TestCase
         $contextId,
         $parameters,
         $parametersDetail,
-        $incomplete
+        $incomplete,
+        $idMissingParameter = [],
+        $verboseInteraction = '',
+        $verboseMissingParameters = [],
+        $helperMessage = ''
     )
     {
         $interaction = $this->factory->create([
@@ -47,6 +51,10 @@ class InteractionFactoryTest extends TestCase
             'parameters' => $parameters,
             'parameters_detail' => $parametersDetail,
             'incomplete' => $incomplete,
+            'id_missing_parameters' => $idMissingParameter,
+            'verbose_interaction' => $verboseInteraction,
+            'verbose_missing_parameters' => $verboseMissingParameters,
+            'helper_message' => $helperMessage,
         ]);
 
         $this->assertEquals($interactionId, $interaction->getInteractionId());
@@ -54,6 +62,10 @@ class InteractionFactoryTest extends TestCase
         $this->assertEquals($parameters, $interaction->getParameters());
         $this->assertEquals($parametersDetail, $interaction->getParametersDetail());
         $this->assertEquals($incomplete, $interaction->isIncomplete());
+        $this->assertEquals($idMissingParameter, $interaction->getIdMissingParameter());
+        $this->assertEquals($verboseInteraction, $interaction->getVerboseInteraction());
+        $this->assertEquals($verboseMissingParameters, $interaction->getVerboseMissingParameters());
+        $this->assertEquals($helperMessage, $interaction->getHelperMessage());
     }
 
     public function testGetFieldsDefault()
@@ -65,12 +77,20 @@ class InteractionFactoryTest extends TestCase
         $this->assertArrayHasKey('parameters', $defaultValues);
         $this->assertArrayHasKey('parameters_detail', $defaultValues);
         $this->assertArrayHasKey('incomplete', $defaultValues);
+        $this->assertArrayHasKey('id_missing_parameters', $defaultValues);
+        $this->assertArrayHasKey('verbose_interaction', $defaultValues);
+        $this->assertArrayHasKey('verbose_missing_parameters', $defaultValues);
+        $this->assertArrayHasKey('helper_message', $defaultValues);
 
         $this->assertEquals(0, $defaultValues['id_interaction']);
         $this->assertEquals('', $defaultValues['id_context']);
         $this->assertEquals(array(), $defaultValues['parameters']);
         $this->assertEquals(array(), $defaultValues['parameters_detail']);
         $this->assertEquals(false, $defaultValues['incomplete']);
+        $this->assertEquals(array(), $defaultValues['id_missing_parameters']);
+        $this->assertEquals('', $defaultValues['verbose_interaction']);
+        $this->assertEquals(array(), $defaultValues['verbose_missing_parameters']);
+        $this->assertEquals('', $defaultValues['helper_message']);
     }
 
     /**
@@ -87,6 +107,10 @@ class InteractionFactoryTest extends TestCase
                 ['test'],
                 ['hello'],
                 true,
+                ['missing'],
+                'id',
+                ['je', 'ne', 'sais plus ce qu', 'il y a'],
+                'message'
             ]
         ];
     }
