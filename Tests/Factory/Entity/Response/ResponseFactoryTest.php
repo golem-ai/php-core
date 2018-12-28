@@ -2,6 +2,7 @@
 
 namespace GolemAi\Core\Tests\Factory\Entity\Response;
 
+use GolemAi\Core\Entity\ErrorResponse;
 use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
@@ -33,6 +34,8 @@ class ResponseFactoryTest extends TestCase
     /**
      * @param int $statusCode
      * @param string $type
+     * @param null $responseData
+     * @param null $responseError
      *
      * @dataProvider responseDataProvider
      */
@@ -74,8 +77,6 @@ class ResponseFactoryTest extends TestCase
     }
 
     /**
-     * @codeCoverageIgnore
-     *
      * @return array
      *
      * @throws \Exception
@@ -86,6 +87,7 @@ class ResponseFactoryTest extends TestCase
             [
                 \rand(200, 400),
                 'answer_text',
+                new ResponseData(),
             ]
         ];
     }

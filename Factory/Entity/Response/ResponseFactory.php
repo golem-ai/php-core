@@ -6,7 +6,6 @@ use GolemAi\Core\Entity\Response;
 use GolemAi\Core\Entity\ResponseData;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Factory\OptionsResolverAwareTrait;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResponseFactory implements EntityFactoryInterface
 {
@@ -51,7 +50,7 @@ class ResponseFactory implements EntityFactoryInterface
             'response_data' => array(
                 ResponseData::class,
                 'null',
-            )
+            ),
         );
     }
 }

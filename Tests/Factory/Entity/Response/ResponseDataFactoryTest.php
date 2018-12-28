@@ -43,7 +43,9 @@ class ResponseDataFactoryTest extends TestCase
         $requestText = '',
         $timeAi = 0,
         $timeTotal = 0,
-        $interactions = []
+        $interactions = [],
+        $verboseAvailableInteractions = [],
+        $helperMessage = ''
     )
     {
         $responseData = $this->factory->create([
@@ -52,7 +54,9 @@ class ResponseDataFactoryTest extends TestCase
             'request_text' => $requestText,
             'time_ai' => $timeAi,
             'time_total' => $timeTotal,
-            'interactions' => $interactions
+            'interactions' => $interactions,
+            'verbose_available_interactions' => $verboseAvailableInteractions,
+            'helper_message' => $helperMessage,
         ]);
 
         $this->assertEquals($requestId, $responseData->getRequestId());
@@ -61,6 +65,8 @@ class ResponseDataFactoryTest extends TestCase
         $this->assertEquals($timeAi, $responseData->getTimeAi());
         $this->assertEquals($timeTotal, $responseData->getTimeTotal());
         $this->assertEquals($interactions, $responseData->getInteractions());
+        $this->assertEquals($verboseAvailableInteractions, $responseData->getVerboseAvailableInteractions());
+        $this->assertEquals($helperMessage, $responseData->getHelperMessage());
     }
 
     public function testGetFieldsDefault()

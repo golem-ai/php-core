@@ -37,7 +37,7 @@ class ErrorResponseFactoryTest extends TestCase
      */
     public function testCreateWithParams(
         $errorCode = '',
-        $errorMessage = 'fr',
+        $errorMessage = '',
         $errorDetail = ''
     )
     {
@@ -52,9 +52,24 @@ class ErrorResponseFactoryTest extends TestCase
         $this->assertEquals($errorDetail, $response->getErrorDetail());
     }
 
+    public function testGetRequiredFields()
+    {
+        $requiredFields = $this->factory->getRequiredFields();
+
+        $this->assertTrue(is_array($requiredFields));
+        $this->assertTrue(in_array('error_code', $requiredFields));
+        $this->assertTrue(in_array('error_message', $requiredFields));
+    }
+
+    public function testGetDefinedFields()
+    {
+        $definedFields = $this->factory->getDefinedFields();
+
+        $this->assertTrue(is_array($definedFields));
+        $this->assertTrue(in_array('error_detail', $definedFields));
+    }
+
     /**
-     * @codeCoverageIgnore
-     *
      * @return array
      *
      * @throws \Exception
@@ -64,8 +79,7 @@ class ErrorResponseFactoryTest extends TestCase
         return [
             [
                 \rand(0, 500),
-                \rand(0, 500),
-                'en',
+                'toto',
                 'Hello I\'m a text request',
             ]
         ];
