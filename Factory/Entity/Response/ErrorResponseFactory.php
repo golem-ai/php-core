@@ -17,10 +17,13 @@ class ErrorResponseFactory implements EntityFactoryInterface
      */
     public function create(array $args)
     {
+        $this->configureOptions();
+        $args = $this->optionsResolver->resolve($args);
+
         return new ErrorResponse(
-            isset($args['error_code']) ? $args['error_code'] : 0,
-            isset($args['error_message']) ? $args['error_message'] : '',
-            isset($args['error_detail']) ? $args['error_detail'] : ''
+            $args['error_code'],
+            $args['error_message'],
+            $args['error_detail']
         );
     }
 
@@ -36,6 +39,13 @@ class ErrorResponseFactory implements EntityFactoryInterface
     {
         return array(
             'error_detail',
+        );
+    }
+
+    public function getFieldsDefault()
+    {
+        return array(
+            'error_detail' => ''
         );
     }
 }

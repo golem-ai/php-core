@@ -33,17 +33,6 @@ class ErrorResponseDenormalizerTest extends TestCase
     public function testDenormalize()
     {
         $output = $this->denormalizer->denormalize([
-            'status_code' => 200,
-            'type' => ''
-        ], Response::class, 'json');
-        $entity = $this->factory->create([
-            'status_code' => 200
-        ]);
-
-        $this->assertInstanceOf(get_class($entity), $output);
-
-        $output = $this->denormalizer->denormalize([
-            'status_code' => 500,
             'type' => 'error',
             'error_code' => 456,
             'error_message' => 'This is an error message',

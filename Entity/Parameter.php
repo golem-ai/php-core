@@ -7,12 +7,12 @@ class Parameter
     /**
      * @var string
      */
-    private $value;
+    private $name;
 
     /**
      * @var string
      */
-    private $name;
+    private $value;
 
     public function __construct($name, $value = '')
     {

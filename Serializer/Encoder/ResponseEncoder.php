@@ -2,6 +2,7 @@
 
 namespace GolemAi\Core\Serializer\Encoder;
 
+use GolemAi\Core\Entity\Response;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
@@ -37,7 +38,10 @@ class ResponseEncoder implements DecoderInterface, EncoderInterface
         }
 
         $dataArray = $this->jsonEncoder->decode((string) $data->getBody(), $format, $context);
-        $dataArray['status_code'] = $data->getStatusCode();
+
+        if ($dataArray['type'] !== Response::ERROR_TYPE) {
+            $dataArray['status_code'] = $data->getStatusCode();
+        }
 
         return $dataArray;
     }

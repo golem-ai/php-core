@@ -20,6 +20,7 @@ class ErrorResponseDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
+        unset($data['type']);
         $response = $this->entityFactory->create($data);
 
         return $response;

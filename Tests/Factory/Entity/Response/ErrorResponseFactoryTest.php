@@ -5,6 +5,7 @@ namespace GolemAi\Core\Tests\Factory\Entity\Response;
 use GolemAi\Core\Entity\ErrorResponse;
 use GolemAi\Core\Factory\Entity\Response\ErrorResponseFactory;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 
 class ErrorResponseFactoryTest extends TestCase
 {
@@ -20,9 +21,15 @@ class ErrorResponseFactoryTest extends TestCase
 
     public function testCreateEmpty()
     {
+        $this->setExpectedException(MissingOptionsException::class);
         $response = $this->factory->create([]);
 
         $this->assertInstanceOf(ErrorResponse::class, $response);
+
+        $response = $this->factory->create([
+            'error_code' => 0,
+            'error_message' => '',
+        ]);
         $this->assertEquals(0, $response->getErrorCode());
         $this->assertEquals('', $response->getErrorMessage());
         $this->assertEquals('', $response->getErrorDetail());
@@ -67,6 +74,15 @@ class ErrorResponseFactoryTest extends TestCase
 
         $this->assertTrue(is_array($definedFields));
         $this->assertTrue(in_array('error_detail', $definedFields));
+    }
+
+    public function testGetFieldsDefault()
+    {
+        $fieldDefaults = $this->factory->getFieldsDefault();
+
+        $this->assertTrue(is_array($fieldDefaults));
+        $this->assertArrayHasKey('error_detail', $fieldDefaults);
+        $this->assertEquals('', $fieldDefaults['error_detail']);
     }
 
     /**
