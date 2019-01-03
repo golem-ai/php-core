@@ -21,7 +21,7 @@ class ErrorResponseFactoryTest extends TestCase
 
     public function testCreateEmpty()
     {
-        $this->setExpectedException(MissingOptionsException::class);
+        $this->expectException(MissingOptionsException::class);
         $response = $this->factory->create([]);
 
         $this->assertInstanceOf(ErrorResponse::class, $response);

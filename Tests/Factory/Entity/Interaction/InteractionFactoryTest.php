@@ -82,20 +82,20 @@ class InteractionFactoryTest extends TestCase
         $this->assertArrayHasKey('verbose_missing_parameters', $defaultValues);
         $this->assertArrayHasKey('helper_message', $defaultValues);
 
+        $this->assertTrue(is_numeric($defaultValues['id_interaction']));
         $this->assertEquals(0, $defaultValues['id_interaction']);
-        $this->assertEquals('', $defaultValues['id_context']);
-        $this->assertEquals(array(), $defaultValues['parameters']);
-        $this->assertEquals(array(), $defaultValues['parameters_detail']);
-        $this->assertEquals(false, $defaultValues['incomplete']);
-        $this->assertEquals(array(), $defaultValues['id_missing_parameters']);
-        $this->assertEquals('', $defaultValues['verbose_interaction']);
-        $this->assertEquals(array(), $defaultValues['verbose_missing_parameters']);
-        $this->assertEquals('', $defaultValues['helper_message']);
+        $this->assertTrue(is_string($defaultValues['id_context']));
+        $this->assertTrue(is_array($defaultValues['parameters']));
+        $this->assertTrue(is_array($defaultValues['parameters_detail']));
+        $this->assertTrue(is_bool($defaultValues['incomplete']));
+        $this->assertFalse($defaultValues['incomplete']);
+        $this->assertTrue(is_array($defaultValues['id_missing_parameters']));
+        $this->assertTrue(is_string($defaultValues['verbose_interaction']));
+        $this->assertTrue(is_array($defaultValues['verbose_missing_parameters']));
+        $this->assertTrue(is_string($defaultValues['helper_message']));
     }
 
     /**
-     * @codeCoverageIgnore
-     *
      * @return array
      */
     public function responseDataProvider()

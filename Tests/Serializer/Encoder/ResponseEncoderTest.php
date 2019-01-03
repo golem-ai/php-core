@@ -106,7 +106,7 @@ class ResponseEncoderTest extends TestCase
 
     public function testDecodeWithoutResponseInterface()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $request = new \stdClass();
 
         $this->encoder->decode($request, 'json');

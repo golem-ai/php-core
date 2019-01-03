@@ -1,0 +1,30 @@
+{
+    "source": {
+        "directories": [
+            "lib/golem-ai/php-core"
+        ],
+        "excludes": [
+            "Tests"
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "infection.log",
+        "summary": "summary.log",
+        "debug": "debug.log",
+        "perMutator": "per-mutator.md",
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "tmpDir": "/opt/tmp-folder",
+    "phpUnit": {
+        "configDir": "lib/golem-ai/php-core",
+        "customPath": "lib/golem-ai/php-core/vendor/bin/phpunit"
+    },
+    "mutators": {
+        "@default": true,
+        "@function_signature": false
+    },
+    "testFramework":"phpunit"
+}

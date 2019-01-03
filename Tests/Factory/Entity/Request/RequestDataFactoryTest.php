@@ -21,8 +21,8 @@ class RequestDataFactoryTest extends TestCase
 
     public function testCreateEmpty()
     {
-        $this->setExpectedException(MissingOptionsException::class);
-        $requestData = $this->factory->create([]);
+        $this->expectException(MissingOptionsException::class);
+        $this->factory->create([]);
 
         $requestData = $this->factory->create([
             'token' => 'toto',
@@ -124,8 +124,6 @@ class RequestDataFactoryTest extends TestCase
     }
 
     /**
-     * @codeCoverageIgnore
-     *
      * @return array
      */
     public function requestDataProvider()

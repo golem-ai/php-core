@@ -2,6 +2,6 @@
 
 namespace GolemAi\Core\Factory\Entity;
 
-class ParameterFactory
+class SnakeToCamelCaseEntityFactory
 {
 }

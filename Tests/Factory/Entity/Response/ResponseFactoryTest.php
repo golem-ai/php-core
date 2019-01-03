@@ -64,6 +64,10 @@ class ResponseFactoryTest extends TestCase
         $this->assertArrayHasKey('status_code', $defaultValues);
         $this->assertArrayHasKey('type', $defaultValues);
         $this->assertArrayHasKey('response_data', $defaultValues);
+
+        $this->assertEquals(200, $defaultValues['status_code']);
+        $this->assertEquals('', $defaultValues['type']);
+        $this->assertEquals(null, $defaultValues['response_data']);
     }
 
     public function testGetFieldsType()

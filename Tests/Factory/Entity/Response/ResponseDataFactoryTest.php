@@ -93,8 +93,6 @@ class ResponseDataFactoryTest extends TestCase
     }
 
     /**
-     * @codeCoverageIgnore
-     *
      * @return array
      *
      * @throws \Exception
