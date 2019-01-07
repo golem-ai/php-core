@@ -5,11 +5,13 @@ namespace GolemAi\Core\Tests\Serializer\Denormalizer\PropertyHandler\Interaction
 use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Parameter;
 use GolemAi\Core\Extractor\ArrayParameterExtractor;
+use GolemAi\Core\Extractor\ParametersDataExtractorInterface;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
 use GolemAi\Core\Serializer\Denormalizer\ParameterDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsPropertyHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class CallsPropertyHandlerTest extends TestCase
 {
@@ -17,15 +19,41 @@ class CallsPropertyHandlerTest extends TestCase
     private $handler;
     /** @var EntityFactoryInterface */
     private $factory;
+    private $denormalizer;
 
     public function setUp()
     {
-        $extractor = new ArrayParameterExtractor();
-        $denormalizer = new ParameterDenormalizer();
-        $denormalizer->addExtractor($extractor);
-        $this->factory = new InteractionFactory();
+        $this->factory = $this->getMockBuilder(EntityFactoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $this->denormalizer = $this->getMockBuilder(DenormalizerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $this->denormalizer->method('denormalize')->willReturnCallback(function($values, $class) {
+            $parameters = [];
+            foreach ($values as $index => $value) {
+                $parameters[] = new $class(
+                    $index,
+                    $value
+                );
+            }
+
+            return $parameters;
+        });
+
+        $this->factory->method('create')->willReturnCallback(function($values) {
+            return new Interaction(
+                0,
+                'contextId',
+                $values['parameters']
+            );
+        });
+
         $this->handler = new CallsPropertyHandler($this->factory);
-        $this->handler->setDenormalizer($denormalizer);
+        $this->handler->setDenormalizer($this->denormalizer);
     }
 
     public function testCanHandle()

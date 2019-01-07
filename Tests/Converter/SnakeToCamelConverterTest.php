@@ -18,6 +18,9 @@ class SnakeToCamelConverterTest extends TestCase
     }
 
     /**
+     * @param $value
+     * @param $result
+     *
      * @dataProvider snakeCaseData
      */
     public function testIsSnakeCase($value, $result)
@@ -33,6 +36,26 @@ class SnakeToCamelConverterTest extends TestCase
             array('helloIAmCamelCase', false),
             array('hello_i_am_snake_case', true),
             array('hello-i-am-kebab-case', false),
+        );
+    }
+
+    /**
+     * @param $value
+     * @param $output
+     *
+     * @dataProvider convertData
+     */
+    public function testConvert($value, $output)
+    {
+        $this->assertEquals($output, $this->converter->convert($value));
+    }
+
+    public function convertData()
+    {
+        return array(
+            array(1, 1),
+            array('helloIAmCamelCase', 'helloIAmCamelCase'),
+            array('hello_i_am_snake_case', 'helloIAmSnakeCase'),
         );
     }
 }

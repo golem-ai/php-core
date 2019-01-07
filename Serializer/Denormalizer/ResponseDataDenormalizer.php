@@ -42,7 +42,7 @@ class ResponseDataDenormalizer implements DenormalizerInterface, DenormalizerAwa
             $data['interactions'] = [];
         }
 
-        $responseData = $this->entityFactory->create($data);
+        $responseData = $this->entityFactory->create(array_merge($data, ['class' => ResponseData::class]));
 
         return $responseData;
     }

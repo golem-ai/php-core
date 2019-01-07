@@ -10,11 +10,13 @@ use GolemAi\Core\Factory\Entity\Interaction\InteractionFactory;
 use GolemAi\Core\Factory\Entity\Response\ResponseDataFactory;
 use GolemAi\Core\Factory\Entity\Response\ResponseFactory;
 use GolemAi\Core\Serializer\Denormalizer\InteractionsDenormalizer;
+use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallPropertyHandler;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction\CallsPropertyHandler;
 use GolemAi\Core\Serializer\Denormalizer\ResponseDataDenormalizer;
 use GolemAi\Core\Serializer\Denormalizer\ResponseDenormalizer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ResponseDenormalizerTest extends TestCase
 {
@@ -27,50 +29,48 @@ class ResponseDenormalizerTest extends TestCase
      * @var EntityFactoryInterface
      */
     private $factory;
+    private $responseDataDenormalizer;
 
     public function setUp()
     {
-        $this->factory = new ResponseFactory();
+        $this->factory = $this->getMockBuilder(EntityFactoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->denormalizer = new ResponseDenormalizer(
             $this->factory
         );
-
-        $interactionFactory = new InteractionFactory();
-        $interactionDenormalizer = new InteractionsDenormalizer();
-        $interactionDenormalizer->addHandler(new CallPropertyHandler($interactionFactory));
-        $interactionDenormalizer->addHandler(new CallsPropertyHandler($interactionFactory));
-
-        $responseDataFactory = new ResponseDataFactory();
-        $responseDataDenormalizer = new ResponseDataDenormalizer($responseDataFactory);
-        $responseDataDenormalizer->setDenormalizer($interactionDenormalizer);
-
-        $this->denormalizer->setDenormalizer($responseDataDenormalizer);
+        $this->responseDataDenormalizer = $this->getMockBuilder(DenormalizerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->denormalizer->setDenormalizer($this->responseDataDenormalizer);
     }
 
     public function testDenormalize()
     {
+        $object = new Response(200);
+        $this->factory->method('create')->willReturn($object);
         $output = $this->denormalizer->denormalize([
             'status_code' => 200,
             'type' => ''
         ], Response::class, 'json');
-        $entity = $this->factory->create([
-            'status_code' => 200
-        ]);
 
-        $this->assertInstanceOf(get_class($entity), $output);
+        $this->assertEquals($object, $output);
+    }
 
-        $interactionId = \rand(0, 500);
-        $output = $this->denormalizer->denormalize([
-            'status_code' => 200,
-            'type' => 'answer_text',
-            'call' => [
-                'id_interaction' => $interactionId
-            ]
-        ], Response::class, 'json');
+    public function testGetResponseData()
+    {
+        $responseData = new ResponseData();
+        $this->responseDataDenormalizer->method('denormalize')
+            ->willReturn($responseData);
 
-        $this->assertEquals(200, $output->getStatusCode());
-        $this->assertEquals('answer_text', $output->getType());
-        $this->assertInstanceOf(ResponseData::class, $output->getData());
+        $reflectionClass = new \ReflectionClass($this->denormalizer);
+        $reflectionMethod = $reflectionClass->getMethod('getResponseData');
+        $reflectionMethod->setAccessible(true);
+
+        $data = $reflectionMethod->invokeArgs($this->denormalizer, [[]]);
+        $this->assertArrayHasKey('data', $data);
+        $this->assertEquals($responseData, $data['data']);
     }
 
     public function testSupportsDenormalization()

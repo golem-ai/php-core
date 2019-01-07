@@ -30,18 +30,9 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $data['response_data'] = $this->denormalizer
-            ->denormalize(
-                $data,
-                ResponseData::class,
-                $format,
-                $context
-            )
-        ;
+        $data = $this->getResponseData($data, $format, $context);
 
-        $response = $this->entityFactory->create($data);
-
-        return $response;
+        return $this->entityFactory->create(array_merge($data, ['class' => Response::class]));
     }
 
     /**
@@ -54,5 +45,18 @@ class ResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareIn
             && isset($data['type'])
             && $data['type'] === Response::ANSWER_TYPE
         ;
+    }
+
+    private function getResponseData($data, $format = null, array $context = array()) {
+        $data['data'] = $this->denormalizer
+            ->denormalize(
+                $data,
+                ResponseData::class,
+                $format,
+                $context
+            )
+        ;
+
+        return $data;
     }
 }

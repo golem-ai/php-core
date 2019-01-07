@@ -34,7 +34,6 @@ class InteractionsDenormalizer implements DenormalizerInterface
                 $interactions = \array_merge($interaction, $interactions);
             }
         }
-
         return $interactions;
     }
 
@@ -43,17 +42,9 @@ class InteractionsDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        if (!\is_array($data) || Interaction::class !== $type) {
-            return false;
-        }
-
-        foreach ($this->propertyHandlers as $handler) {
-            if ($handler->canHandle($data)) {
-                return true;
-            }
-        }
-
-        return false;
+        return \is_array($data)
+            && Interaction::class === $type
+        ;
     }
 
     /**

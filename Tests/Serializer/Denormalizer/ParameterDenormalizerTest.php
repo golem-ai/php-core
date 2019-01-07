@@ -3,9 +3,7 @@
 namespace GolemAi\Core\Tests\Serializer\Denormalizer;
 
 use GolemAi\Core\Entity\Parameter;
-use GolemAi\Core\Extractor\ArrayParameterExtractor;
-use GolemAi\Core\Extractor\NullParameterExtractor;
-use GolemAi\Core\Extractor\ScalarParameterExtractor;
+use GolemAi\Core\Extractor\ParametersDataExtractorInterface;
 use GolemAi\Core\Serializer\Denormalizer\ParameterDenormalizer;
 use PHPUnit\Framework\TestCase;
 
@@ -15,42 +13,89 @@ class ParameterDenormalizerTest extends TestCase
      * @var ParameterDenormalizer
      */
     private $denormalizer;
+    private $extractor;
 
     protected function setUp()
     {
-        $extractor = new ArrayParameterExtractor();
+        $this->extractor = $this->getMockBuilder(ParametersDataExtractorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $this->denormalizer = new ParameterDenormalizer();
-        $this->denormalizer->addExtractor($extractor);
-        $extractor = new NullParameterExtractor();
-        $this->denormalizer->addExtractor($extractor);
-        $extractor = new ScalarParameterExtractor();
-        $this->denormalizer->addExtractor($extractor);
+        $this->denormalizer->addExtractor($this->extractor);
     }
 
-    public function testDeserialize()
+    /**
+     * @param $parameterName
+     * @param $value
+     *
+     * @dataProvider extractorDataProvider
+     */
+    public function testDeserialize($value)
     {
         $parameters = $this->denormalizer->denormalize([], Parameter::class);
-
         $this->assertTrue(\is_array($parameters));
 
-        $dateArray = [
-            'day' => 1,
-            'month' => 12,
-            'year' => 2018,
-        ];
+        $parameterName = random_bytes(10);
         $data = [
-            'arrival_town' => ['Rouen'],
-            'departure_town' => ['Paris'],
-            'departure_date' => $dateArray,
+            $parameterName => $value,
         ];
+
+        $this->extractor->method('supports')->willReturn(true);
+        $this->extractor->method('extractValue')->willReturn($value);
         $parameters = $this->denormalizer->denormalize($data, Parameter::class);
-        $this->assertEquals('arrival_town', $parameters[0]->getName());
-        $this->assertEquals('Rouen', $parameters[0]->getValue());
-        $this->assertEquals('departure_town', $parameters[1]->getName());
-        $this->assertEquals('Paris', $parameters[1]->getValue());
-        $this->assertEquals('departure_date', $parameters[2]->getName());
-        $this->assertEquals($dateArray, $parameters[2]->getValue());
+        $this->assertEquals($parameterName, $parameters[0]->getName());
+        $this->assertEquals($value, $parameters[0]->getValue());
     }
+
+    public function extractorDataProvider()
+    {
+        return [
+            ['Rouen'],
+            ['Paris'],
+            [[
+                'day' => 1,
+                'month' => 12,
+                'year' => 2018,
+            ]],
+        ];
+    }
+
+    /**
+     * @param $value
+     * @throws \ReflectionException
+     *
+     * @dataProvider extractorDataProvider
+     */
+    public function testExtractValue($value)
+    {
+        $this->extractor->method('supports')->willReturn(true);
+        $this->extractor->method('extractValue')->willReturn($value);
+
+        $reflection = new \ReflectionClass($this->denormalizer);
+        $methodReflection = $reflection->getMethod('extractValue');
+        $methodReflection->setAccessible(true);
+
+        $this->assertEquals($value, $methodReflection->invokeArgs($this->denormalizer, [$value]));
+    }
+
+    /**
+     * @param $value
+     * @throws \ReflectionException
+     *
+     * @dataProvider extractorDataProvider
+     */
+    public function testExtractValueWithoutExtractor($value)
+    {
+        $this->extractor->method('supports')->willReturn(false);
+
+        $reflection = new \ReflectionClass($this->denormalizer);
+        $methodReflection = $reflection->getMethod('extractValue');
+        $methodReflection->setAccessible(true);
+
+        $this->assertEquals(null, $methodReflection->invokeArgs($this->denormalizer, [$value]));
+    }
+
 
     public function testSupportsDenormalization()
     {

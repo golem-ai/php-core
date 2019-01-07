@@ -4,6 +4,7 @@
 namespace GolemAi\Core\Serializer\Denormalizer\PropertyHandler\Interaction;
 
 
+use GolemAi\Core\Entity\Interaction;
 use GolemAi\Core\Entity\Parameter;
 use GolemAi\Core\Factory\Entity\EntityFactoryInterface;
 use GolemAi\Core\Serializer\Denormalizer\PropertyHandler\DenormalizerPropertyHandlerInterface;
@@ -49,7 +50,9 @@ class CallPropertyHandler implements DenormalizerPropertyHandlerInterface
             $data[self::PROPERTY]['parameters'] = $parameters;
         }
 
-        return [$this->factory->create($data[self::PROPERTY])];
+        return [$this->factory->create(
+            array_merge($data[self::PROPERTY], ['class' => Interaction::class])
+        )];
     }
 
     /**
