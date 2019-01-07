@@ -20,7 +20,7 @@ class Response
      * @param ResponseData|null $data
      */
     public function __construct(
-        $statusCode,
+        $statusCode = 200,
         $type = '',
         ResponseData $data = null
     )
