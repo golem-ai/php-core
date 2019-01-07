@@ -3,6 +3,7 @@
 namespace GolemAi\Core\Factory\Entity;
 
 use GolemAi\Core\Converter\SnakeToCamelConverter;
+use GolemAi\Core\Factory\Exception\MissingArgumentException;
 use GolemAi\Core\Factory\Exception\MissingClassNameException;
 
 class SnakeToCamelCaseEntityFactory implements EntityFactoryInterface
@@ -64,12 +65,17 @@ class SnakeToCamelCaseEntityFactory implements EntityFactoryInterface
         $instanceArgs = array();
         foreach ($constructorParameters as $index => $parameter) {
             $name = $parameter->getName();
-            try {
-                $arg = $parameter->getDefaultValue();
-            } catch (\ReflectionException $exception) {}
 
             if (array_key_exists($name, $givenArgs)) {
                 $arg = $givenArgs[$name];
+            }
+
+            if (null !== $arg) {
+                try {
+                    $arg = $parameter->getDefaultValue();
+                } catch (\ReflectionException $exception) {
+                    throw new MissingArgumentException($parameter->getName());
+                }
             }
 
             $instanceArgs[$index] = $arg;
