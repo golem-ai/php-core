@@ -65,12 +65,13 @@ class SnakeToCamelCaseEntityFactory implements EntityFactoryInterface
         $instanceArgs = array();
         foreach ($constructorParameters as $index => $parameter) {
             $name = $parameter->getName();
+            $arg = null;
 
             if (array_key_exists($name, $givenArgs)) {
                 $arg = $givenArgs[$name];
             }
 
-            if (null !== $arg) {
+            if (null === $arg) {
                 try {
                     $arg = $parameter->getDefaultValue();
                 } catch (\ReflectionException $exception) {
