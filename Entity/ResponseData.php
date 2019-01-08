@@ -6,7 +6,7 @@ namespace GolemAi\Core\Entity;
 
 class ResponseData
 {
-    private $requestId;
+    private $idRequest;
     private $requestLanguage;
     private $requestText;
     private $timeAi;
@@ -17,7 +17,7 @@ class ResponseData
 
     /**
      * ResponseData constructor.
-     * @param int $requestId
+     * @param int $idRequest
      * @param string $requestLanguage
      * @param string $requestText
      * @param float $timeAi
@@ -25,7 +25,7 @@ class ResponseData
      * @param array $interactions
      */
     public function __construct(
-        $requestId = 0,
+        $idRequest = 0,
         $requestLanguage = 'fr',
         $requestText = '',
         $timeAi = 0.0,
@@ -35,7 +35,7 @@ class ResponseData
         $helperMessage = ''
     )
     {
-        $this->requestId = $requestId;
+        $this->idRequest = $idRequest;
         $this->requestLanguage = $requestLanguage;
         $this->requestText = $requestText;
         $this->timeAi = $timeAi;
@@ -48,9 +48,9 @@ class ResponseData
     /**
      * @return int
      */
-    public function getRequestId()
+    public function getIdRequest()
     {
-        return $this->requestId;
+        return $this->idRequest;
     }
 
     /**

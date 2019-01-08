@@ -36,12 +36,12 @@ class ResponseEncoder implements DecoderInterface, EncoderInterface
                 )
             );
         }
-
+        $dataString = $data;
         if ($data instanceof ResponseInterface) {
-            $data = (string) $data->getBody();
+            $dataString = (string) $data->getBody();
         }
 
-        $dataArray = $this->jsonEncoder->decode($data, $format, $context);
+        $dataArray = $this->jsonEncoder->decode($dataString, $format, $context);
 
         if ($data instanceof ResponseInterface && $dataArray['type'] !== Response::ERROR_TYPE) {
             $dataArray['status_code'] = $data->getStatusCode();

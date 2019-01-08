@@ -57,8 +57,8 @@ class InteractionFactoryTest extends TestCase
             'helper_message' => $helperMessage,
         ]);
 
-        $this->assertEquals($interactionId, $interaction->getInteractionId());
-        $this->assertEquals($contextId, $interaction->getContextId());
+        $this->assertEquals($interactionId, $interaction->getIdInteraction());
+        $this->assertEquals($contextId, $interaction->getIdContext());
         $this->assertEquals($parameters, $interaction->getParameters());
         $this->assertEquals($parametersDetail, $interaction->getParametersDetail());
         $this->assertEquals($incomplete, $interaction->isIncomplete());

@@ -59,7 +59,7 @@ class ResponseDataFactoryTest extends TestCase
             'helper_message' => $helperMessage,
         ]);
 
-        $this->assertEquals($requestId, $responseData->getRequestId());
+        $this->assertEquals($requestId, $responseData->getIdRequest());
         $this->assertEquals($requestLanguage, $responseData->getRequestLanguage());
         $this->assertEquals($requestText, $responseData->getRequestText());
         $this->assertEquals($timeAi, $responseData->getTimeAi());

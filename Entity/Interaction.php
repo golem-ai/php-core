@@ -4,8 +4,8 @@ namespace GolemAi\Core\Entity;
 
 class Interaction
 {
-    private $interactionId;
-    private $contextId;
+    private $idInteraction;
+    private $idContext;
     private $parameters;
     private $parametersDetail;
     private $incomplete;
@@ -15,8 +15,8 @@ class Interaction
     private $helperMessage;
 
     public function __construct(
-        $interactionId = '',
-        $contextId = '',
+        $idInteraction = '',
+        $idContext = '',
         $parameters = [],
         $parametersDetail = [],
         $incomplete = false,
@@ -26,8 +26,8 @@ class Interaction
         $helperMessage = ''
     )
     {
-        $this->interactionId = $interactionId;
-        $this->contextId = $contextId;
+        $this->idInteraction = $idInteraction;
+        $this->idContext = $idContext;
         $this->parameters = $parameters;
         $this->parametersDetail = $parametersDetail;
         $this->incomplete = $incomplete;
@@ -40,17 +40,17 @@ class Interaction
     /**
      * @return string
      */
-    public function getInteractionId()
+    public function getIdInteraction()
     {
-        return $this->interactionId;
+        return $this->idInteraction;
     }
 
     /**
      * @return string
      */
-    public function getContextId()
+    public function getIdContext()
     {
-        return $this->contextId;
+        return $this->idContext;
     }
 
     /**
