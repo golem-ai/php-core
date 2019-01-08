@@ -28,18 +28,22 @@ class ResponseEncoder implements DecoderInterface, EncoderInterface
      */
     public function decode($data, $format, array $context = array())
     {
-        if (!$data instanceof ResponseInterface) {
+        if (!$data instanceof ResponseInterface && !\is_string($data)) {
             throw new \InvalidArgumentException(
                 sprintf('%s argument needed, %s given',
-                    ResponseInterface::class,
-                    get_class($data)
+                    ResponseInterface::class.' or string',
+                    gettype($data)
                 )
             );
         }
 
-        $dataArray = $this->jsonEncoder->decode((string) $data->getBody(), $format, $context);
+        if ($data instanceof ResponseInterface) {
+            $data = (string) $data->getBody();
+        }
 
-        if ($dataArray['type'] !== Response::ERROR_TYPE) {
+        $dataArray = $this->jsonEncoder->decode($data, $format, $context);
+
+        if ($data instanceof ResponseInterface && $dataArray['type'] !== Response::ERROR_TYPE) {
             $dataArray['status_code'] = $data->getStatusCode();
         }
 

@@ -89,6 +89,17 @@ class ResponseEncoderTest extends TestCase
         $this->assertEquals($statusCode, $data['status_code']);
     }
 
+    public function testDecodeWithString()
+    {
+        $data = $this->encoder->decode('{"type":"answer", "i_am":"a_json"}', 'json');
+
+        $this->assertTrue(is_array($data));
+        $this->assertArrayHasKey('type', $data);
+        $this->assertEquals('answer', $data['type']);
+        $this->assertArrayHasKey('i_am', $data);
+        $this->assertEquals('a_json', $data['i_am']);
+    }
+
     public function testDecodeWithErrorResponseInterface()
     {
         $this->stream->method('getContents')->willReturn('{"type":"'.Response::ERROR_TYPE.'", "i_am":"a_json"}');
@@ -110,5 +121,11 @@ class ResponseEncoderTest extends TestCase
         $request = new \stdClass();
 
         $this->encoder->decode($request, 'json');
+    }
+
+    public function testDecodeWithInteger()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->encoder->decode(1, 'json');
     }
 }
