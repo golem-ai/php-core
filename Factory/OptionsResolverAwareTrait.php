@@ -48,6 +48,7 @@ trait OptionsResolverAwareTrait
             'interactions',
             'type',
             'verbose_available_interactions',
+            'conversation_code'
         );
     }
 

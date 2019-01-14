@@ -14,6 +14,7 @@ class ResponseData
     private $interactions;
     private $verboseAvailableInteractions;
     private $helperMessage;
+    private $conversationCode;
 
     /**
      * ResponseData constructor.
@@ -23,6 +24,7 @@ class ResponseData
      * @param float $timeAi
      * @param float $timeTotal
      * @param array $interactions
+     * @param int $conversationCode
      */
     public function __construct(
         $idRequest = 0,
@@ -32,7 +34,8 @@ class ResponseData
         $timeTotal = 0.0,
         array $interactions = [],
         $verboseAvailableInteractions = '[]',
-        $helperMessage = ''
+        $helperMessage = '',
+        $conversationCode = 0
     )
     {
         $this->idRequest = $idRequest;
@@ -43,6 +46,7 @@ class ResponseData
         $this->interactions = $interactions;
         $this->verboseAvailableInteractions = $verboseAvailableInteractions;
         $this->helperMessage = $helperMessage;
+        $this->conversationCode = $conversationCode;
     }
 
     /**
@@ -107,5 +111,13 @@ class ResponseData
     public function getHelperMessage()
     {
         return $this->helperMessage;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getConversationCode()
+    {
+        return $this->conversationCode;
     }
 }

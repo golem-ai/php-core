@@ -29,7 +29,8 @@ class RequestDataFactory implements EntityFactoryInterface
             $args['parameters_detail'],
             $args['disable_verbose'],
             $args['multiple_interaction_search'],
-            $args['conversation_mode']
+            $args['conversation_mode'],
+            $args['conversation_code']
         );
     }
 
@@ -51,6 +52,7 @@ class RequestDataFactory implements EntityFactoryInterface
             'disable_verbose',
             'multiple_interaction_search',
             'conversation_mode',
+            'conversation_code'
         );
     }
 
@@ -64,6 +66,7 @@ class RequestDataFactory implements EntityFactoryInterface
             'disable_verbose' => true,
             'multiple_interaction_search' => false,
             'conversation_mode' => false,
+            'conversation_code' => ''
         );
     }
 }
