@@ -66,7 +66,7 @@ class RequestDataFactory implements EntityFactoryInterface
             'disable_verbose' => true,
             'multiple_interaction_search' => false,
             'conversation_mode' => false,
-            'conversation_code' => ''
+            'conversation_code' => 0
         );
     }
 }
