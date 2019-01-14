@@ -67,7 +67,7 @@ class RequestData
         $disableVerbose = true,
         $multipleInteractionSearch = false,
         $conversationMode = false,
-        $conversationCode = ''
+        $conversationCode = 0
     )
     {
         $this->token = $token;
