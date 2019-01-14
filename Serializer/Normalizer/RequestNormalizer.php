@@ -22,6 +22,7 @@ class RequestNormalizer implements NormalizerInterface
             'text' => $data->getText(),
             'token' => $data->getToken(),
             'type' => $data->getType(),
+            'conversation_code' => $data->getConversationCode() ,
         ];
     }
 
