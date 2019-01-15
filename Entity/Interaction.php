@@ -47,6 +47,15 @@ class Interaction
 
     /**
      * @return string
+     * @deprecated Use getIdInteraction instead.
+     */
+    public function getInteractionId()
+    {
+        return $this->getIdInteraction();
+    }
+
+    /**
+     * @return string
      */
     public function getIdContext()
     {
