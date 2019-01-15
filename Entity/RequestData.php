@@ -51,6 +51,11 @@ class RequestData
      * @var bool
      */
     private $conversationMode;
+    
+    /**
+     * @var int
+     */
+    private $conversationCode;
 
     public function __construct(
         $token =  '',
@@ -61,7 +66,8 @@ class RequestData
         $parametersDetail = true,
         $disableVerbose = true,
         $multipleInteractionSearch = false,
-        $conversationMode = false
+        $conversationMode = false,
+        $conversationCode = 0
     )
     {
         $this->token = $token;
@@ -73,7 +79,9 @@ class RequestData
         $this->multipleInteractionSearch = $multipleInteractionSearch;
         $this->text = $text;
         $this->conversationMode = $conversationMode;
+        $this->conversationCode = $conversationCode;
     }
+
 
     /**
      * @return string
@@ -217,5 +225,21 @@ class RequestData
     public function setConversationMode($conversationMode)
     {
         $this->conversationMode = $conversationMode;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getConversationCode()
+    {
+        return $this->conversationCode;
+    }
+    
+    /**
+     * @param integer $conversationCode
+     */
+    public function setConversationCode($conversationCode)
+    {
+        $this->conversationCode = $conversationCode;
     }
 }
