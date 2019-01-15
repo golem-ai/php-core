@@ -20,7 +20,7 @@ class Interaction
         $parameters = [],
         $parametersDetail = [],
         $incomplete = false,
-        $idMissingParameter = [],
+        $idMissingParameters = [],
         $verboseInteraction = '',
         $verboseMissingParameters = [],
         $helperMessage = ''
@@ -31,7 +31,7 @@ class Interaction
         $this->parameters = $parameters;
         $this->parametersDetail = $parametersDetail;
         $this->incomplete = $incomplete;
-        $this->idMissingParameter = $idMissingParameter;
+        $this->idMissingParameters = $idMissingParameters;
         $this->verboseInteraction = $verboseInteraction;
         $this->verboseMissingParameters = $verboseMissingParameters;
         $this->helperMessage = $helperMessage;
@@ -89,9 +89,9 @@ class Interaction
     /**
      * @return array
      */
-    public function getIdMissingParameter()
+    public function getIdMissingParameters()
     {
-        return $this->idMissingParameter;
+        return $this->idMissingParameters;
     }
 
     /**
