@@ -30,7 +30,8 @@ class ResponseDataFactory implements EntityFactoryInterface
             $args['interactions'],
             $args['verbose_available_interactions'],
             $args['helper_message'],
-            $args['conversation_code']
+            $args['conversation_code'],
+            $args['labels']
         );
     }
 
@@ -45,7 +46,8 @@ class ResponseDataFactory implements EntityFactoryInterface
             'interactions' => array(),
             'verbose_available_interactions' => array(),
             'helper_message' => '',
-            'conversation_code' => 0
+            'conversation_code' => 0,
+            'labels' => array(),
         );
     }
 }

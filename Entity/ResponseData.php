@@ -1,8 +1,6 @@
 <?php
 
-
 namespace GolemAi\Core\Entity;
-
 
 class ResponseData
 {
@@ -15,6 +13,7 @@ class ResponseData
     private $verboseAvailableInteractions;
     private $helperMessage;
     private $conversationCode;
+    private $labels;
 
     /**
      * ResponseData constructor.
@@ -25,6 +24,7 @@ class ResponseData
      * @param float $timeTotal
      * @param array $interactions
      * @param int $conversationCode
+     * @param array $labels
      */
     public function __construct(
         $idRequest = 0,
@@ -35,9 +35,9 @@ class ResponseData
         array $interactions = [],
         $verboseAvailableInteractions = '[]',
         $helperMessage = '',
-        $conversationCode = 0
-    )
-    {
+        $conversationCode = 0,
+        $labels = []
+    ) {
         $this->idRequest = $idRequest;
         $this->requestLanguage = $requestLanguage;
         $this->requestText = $requestText;
@@ -47,6 +47,7 @@ class ResponseData
         $this->verboseAvailableInteractions = $verboseAvailableInteractions;
         $this->helperMessage = $helperMessage;
         $this->conversationCode = $conversationCode;
+        $this->labels = $labels;
     }
 
     /**
@@ -112,12 +113,19 @@ class ResponseData
     {
         return $this->helperMessage;
     }
-    
+
     /**
      * @return int
      */
     public function getConversationCode()
     {
         return $this->conversationCode;
+    }
+    /**
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
     }
 }
