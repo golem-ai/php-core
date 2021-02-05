@@ -14,6 +14,12 @@ class Interaction
     private $verboseMissingParameters;
     private $helperMessage;
 
+    public $idx;
+    public $page;
+    public $generated;
+    public $filename;
+    public $idMissingParameters;
+
     public function __construct(
         $idInteraction = '',
         $idContext = '',

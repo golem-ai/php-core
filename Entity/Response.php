@@ -12,6 +12,8 @@ class Response
     private $type;
     private $data;
 
+    public $usedLanguage;
+
     /**
      * Response constructor.
      *
